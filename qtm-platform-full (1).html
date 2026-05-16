@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QTM — Quod Tango Muto | What I Touch, I Change</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dim:#8A6E30;--gold-pale:rgba(201,168,76,0.08);
+  --teal:#2A7A6A;--teal-light:#4AA89A;--teal-dim:#1A5048;
+  --charcoal:#1A1A18;--charcoal-mid:#252520;--charcoal-light:#2E2E28;--charcoal-card:#323228;
+  --text-primary:#F0EAD8;--text-muted:#9A9488;--text-dim:#6A6460;
+  --border:rgba(201,168,76,0.12);--border-strong:rgba(201,168,76,0.3);
+  /* dashboard light theme vars */
+  --dw:#FEFCF8;--dc:#1A1208;--dm:#5C4A32;--dl:#8B7355;--dmut:#B09A7A;
+  --dgold:#C8A96E;--dgoldb:rgba(200,169,110,0.15);--dsage:#7A9E7E;
+  --dsageb:rgba(122,158,126,0.12);--dcream:#FBF7F0;--dcreamd:#F2EBE0;
+  --dbor:rgba(200,169,110,0.18);--dborS:rgba(200,169,110,0.38);
+  --dterr:#C4715A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;flex-direction:column;}
+.screen.active{display:flex;}
+
+/* ===================== LANDING STYLES ===================== */
+body{font-family:'DM Sans',sans-serif;background:var(--charcoal);color:var(--text-primary);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:68px;background:rgba(26,26,24,0.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'DM Mono',monospace;font-size:1.05rem;letter-spacing:.35em;color:var(--gold);cursor:pointer;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--text-muted);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold-light);}
+.nav-cta{display:flex;gap:.8rem;align-items:center;}
+.btn-ghost{padding:.52rem 1.3rem;border:1px solid var(--border-strong);background:transparent;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;}
+.btn-ghost:hover{background:rgba(201,168,76,.08);border-color:var(--gold);}
+.btn-primary-dark{padding:.52rem 1.3rem;background:var(--gold);color:var(--charcoal);font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;cursor:pointer;border:none;border-radius:2px;transition:all .2s;}
+.btn-primary-dark:hover{background:var(--gold-light);}
+.btn-lg{padding:.85rem 2rem;font-size:.83rem;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:8rem 4rem 4rem;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(42,122,106,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(201,168,76,.05) 0%,transparent 50%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-inner{position:relative;z-index:2;max-width:1100px;width:100%;text-align:center;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:fadeUp .8s .2s forwards;}
+.hero-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,7vw,6.5rem);font-weight:300;line-height:1.05;margin-bottom:1.4rem;opacity:0;animation:fadeUp .8s .35s forwards;}
+.hero-headline em{font-style:italic;color:var(--gold-light);}
+.hero-sub{font-size:.98rem;color:var(--text-muted);max-width:560px;margin:0 auto 2.8rem;line-height:1.8;opacity:0;animation:fadeUp .8s .5s forwards;}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;opacity:0;animation:fadeUp .8s .65s forwards;}
+.clasp-graphic{max-width:680px;margin:0 auto;opacity:0;animation:fadeUp 1s .8s forwards;}
+.clasp-graphic svg{width:100%;}
+
+/* TICKER */
+.ticker-bar{background:var(--charcoal-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.75rem 0;overflow:hidden;}
+.ticker-track{display:flex;gap:4rem;animation:ticker 30s linear infinite;white-space:nowrap;}
+.ticker-item{display:flex;align-items:center;gap:.6rem;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text-muted);letter-spacing:.06em;}
+.t-dot{width:5px;height:5px;border-radius:50%;background:var(--teal-light);flex-shrink:0;}
+.t-val{color:var(--gold);}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section.lnd{padding:5.5rem 4rem;}
+.s-label{font-family:'DM Mono',monospace;font-size:.63rem;letter-spacing:.38em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:.9rem;}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;line-height:1.15;margin-bottom:.9rem;}
+.s-title em{font-style:italic;color:var(--teal-light);}
+.s-title .gld{color:var(--gold-light);}
+.s-sub{color:var(--text-muted);font-size:.92rem;line-height:1.8;max-width:520px;margin-bottom:2.8rem;}
+.container{max-width:1200px;margin:0 auto;}
+
+/* How grid */
+.how-section{background:var(--charcoal-mid);}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:start;}
+.how-steps{display:flex;flex-direction:column;gap:2.2rem;}
+.step-item{display:flex;gap:1.4rem;}
+.step-num-n{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--gold-dim);line-height:1;flex-shrink:0;width:2.8rem;}
+.step-content h3{font-size:.92rem;font-weight:500;color:var(--text-primary);margin-bottom:.35rem;letter-spacing:.02em;}
+.step-content p{font-size:.85rem;color:var(--text-muted);line-height:1.7;}
+
+/* DASH PREVIEW */
+.dash-preview{background:var(--charcoal-light);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.dash-hdr{background:rgba(201,168,76,.05);border-bottom:1px solid var(--border);padding:.9rem 1.4rem;display:flex;align-items:center;gap:.7rem;}
+.ddots{display:flex;gap:5px;}
+.ddot{width:7px;height:7px;border-radius:50%;}
+.dash-title-t{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text-dim);letter-spacing:.12em;}
+.dash-body{padding:1.3rem;}
+.dstat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1rem;}
+.dstat{background:var(--charcoal);border:1px solid var(--border);border-radius:4px;padding:.9rem;}
+.dstat-val{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--gold);line-height:1;margin-bottom:.2rem;}
+.dstat-lbl{font-size:.65rem;color:var(--text-dim);letter-spacing:.07em;text-transform:uppercase;}
+.dbar-item{display:flex;flex-direction:column;gap:.28rem;margin-bottom:.55rem;}
+.dbar-meta{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text-muted);}
+.dbar-track{height:4px;background:var(--charcoal);border-radius:2px;overflow:hidden;}
+.dbar-fill{height:100%;border-radius:2px;}
+.dnpo-item{display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);border:1px solid var(--border);border-radius:4px;padding:.65rem .9rem;margin-bottom:.5rem;}
+.dnpo-name{font-size:.78rem;color:var(--text-primary);}
+.dbadge{font-size:.63rem;padding:.18rem .55rem;border-radius:2px;letter-spacing:.05em;text-transform:uppercase;}
+.dbg{background:rgba(201,168,76,.12);color:var(--gold);}
+.dbt{background:rgba(42,122,106,.18);color:var(--teal-light);}
+
+/* Features */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.3rem;margin-top:2.5rem;}
+.feat-card{background:var(--charcoal-mid);border:1px solid var(--border);border-radius:6px;padding:1.8rem;transition:border-color .3s;position:relative;overflow:hidden;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold-light),var(--gold-dim));opacity:0;transition:opacity .3s;}
+.feat-card:hover{border-color:var(--border-strong);}
+.feat-card:hover::before{opacity:1;}
+.feat-icon{width:34px;height:34px;border:1px solid var(--border-strong);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-size:.85rem;}
+.feat-card h3{font-size:.9rem;font-weight:500;color:var(--text-primary);margin-bottom:.45rem;}
+.feat-card p{font-size:.82rem;color:var(--text-muted);line-height:1.7;}
+
+/* Downloads */
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin-top:2rem;}
+.dl-card{background:var(--charcoal);border:1px solid var(--border);border-radius:6px;padding:1.4rem;display:flex;flex-direction:column;gap:.9rem;cursor:pointer;transition:border-color .3s;}
+.dl-card:hover{border-color:var(--gold-dim);}
+.dl-icon{width:40px;height:40px;background:rgba(201,168,76,.07);border:1px solid var(--border-strong);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.dl-card h4{font-size:.85rem;font-weight:500;color:var(--text-primary);}
+.dl-card p{font-size:.76rem;color:var(--text-muted);line-height:1.6;flex:1;}
+.dl-meta{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border);}
+.dl-type{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold-dim);letter-spacing:.08em;}
+.dl-btn{font-size:.68rem;color:var(--gold);letter-spacing:.07em;text-transform:uppercase;background:none;border:none;font-family:'DM Sans',sans-serif;cursor:pointer;}
+
+/* Needs card landing */
+.nc-card{background:var(--charcoal-light);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.nc-hdr{padding:1.1rem 1.4rem;background:rgba(42,122,106,.07);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.nc-lbl{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--teal-light);letter-spacing:.18em;text-transform:uppercase;}
+.nc-ver{font-size:.66rem;color:var(--teal-light);}
+.nc-body{padding:1.4rem;}
+.nc-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--text-primary);margin-bottom:.75rem;line-height:1.3;}
+.nc-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.9rem;}
+.nc-tag{font-size:.62rem;padding:.18rem .55rem;border:1px solid var(--border-strong);color:var(--text-muted);border-radius:2px;letter-spacing:.05em;text-transform:uppercase;}
+.nc-desc{font-size:.8rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.1rem;}
+.nc-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.1rem;}
+.nc-metric{text-align:center;padding:.75rem;background:var(--charcoal);border:1px solid var(--border);border-radius:4px;}
+.nc-mval{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--gold);line-height:1;margin-bottom:.18rem;}
+.nc-mlbl{font-size:.6rem;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;}
+.nc-prog{margin-bottom:1.1rem;}
+.nc-pmeta{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text-muted);margin-bottom:.35rem;}
+.nc-track{height:4px;background:var(--charcoal);border-radius:3px;overflow:hidden;}
+.nc-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--teal-dim),var(--teal-light));}
+.nc-acts{display:flex;gap:.75rem;}
+.btn-fund-l{flex:1;padding:.72rem;background:var(--gold);color:var(--charcoal);font-size:.76rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn-fund-l:hover{background:var(--gold-light);}
+.btn-view-l{flex:1;padding:.72rem;background:transparent;color:var(--text-muted);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border-strong);border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-view-l:hover{border-color:var(--gold-dim);color:var(--gold);}
+
+/* Impact Upload */
+.imp-upload{background:var(--charcoal-mid);border:1px dashed var(--border-strong);border-radius:8px;padding:1.8rem;margin-top:1.4rem;}
+.imp-uhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;}
+.imp-utitle{font-size:.86rem;font-weight:500;color:var(--text-primary);}
+.imp-cnt{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--teal-light);}
+.imp-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1.1rem;}
+.imp-img{aspect-ratio:1;border-radius:4px;background:var(--charcoal-light);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;position:relative;overflow:hidden;cursor:pointer;}
+.imp-add{aspect-ratio:1;border-radius:4px;border:1px dashed var(--border-strong);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-direction:column;gap:.28rem;}
+.imp-add:hover{border-color:var(--gold-dim);background:rgba(201,168,76,.04);}
+.imp-add-icon{font-size:1.1rem;color:var(--text-dim);}
+.imp-add-lbl{font-size:.58rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.07em;}
+.imp-stats{display:flex;gap:.7rem;}
+.imp-stat{flex:1;padding:.75rem;background:var(--charcoal);border:1px solid var(--border);border-radius:4px;text-align:center;}
+.imp-sv{font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--teal-light);line-height:1;margin-bottom:.18rem;}
+.imp-sl{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;}
+
+/* Impact Wall */
+.wall-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem;}
+.wstat{background:var(--charcoal-mid);padding:2.2rem 1.8rem;text-align:center;}
+.wstat-val{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:.45rem;}
+.wstat-lbl{font-size:.73rem;color:var(--text-muted);letter-spacing:.07em;}
+.wall-stories{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.wstory{background:var(--charcoal);padding:2.2rem 1.8rem;}
+.wsnpo{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--teal-light);letter-spacing:.14em;margin-bottom:.75rem;}
+.wsquote{font-family:'Cormorant Garamond',serif;font-size:1.02rem;font-style:italic;color:var(--text-primary);line-height:1.6;margin-bottom:.9rem;}
+.wsmeta{font-size:.7rem;color:var(--text-dim);}
+.wsamount{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--gold);}
+
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem;}
+.price-card{background:var(--charcoal);border:1px solid var(--border);border-radius:6px;padding:2.3rem 1.8rem;position:relative;transition:border-color .3s;}
+.price-card.featured{border-color:var(--gold-dim);background:linear-gradient(180deg,rgba(201,168,76,.04) 0%,var(--charcoal) 40%);}
+.price-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--charcoal);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:.18rem .75rem;border-radius:0 0 4px 4px;}
+.price-tier{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--gold-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.9rem;}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--text-primary);line-height:1;margin-bottom:.28rem;}
+.price-amount span{font-size:.95rem;color:var(--text-muted);}
+.price-desc{font-size:.78rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.8rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border);}
+.price-feats{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.8rem;}
+.price-feat{display:flex;align-items:flex-start;gap:.55rem;font-size:.78rem;color:var(--text-muted);line-height:1.4;}
+.pcheck{color:var(--teal-light);flex-shrink:0;margin-top:.1rem;}
+
+/* CTA */
+.cta-section{background:var(--charcoal);padding:7rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(42,122,106,.09) 0%,transparent 70%);}
+.cta-inner{position:relative;z-index:2;max-width:680px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4.2rem);font-weight:300;line-height:1.1;margin-bottom:1.4rem;}
+.cta-title em{font-style:italic;color:var(--gold-light);}
+.cta-sub{font-size:.93rem;color:var(--text-muted);line-height:1.8;margin-bottom:2.8rem;}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+
+/* Footer */
+footer{background:var(--charcoal-mid);border-top:1px solid var(--border);padding:2.5rem 4rem;}
+.foot-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.8rem;}
+.foot-logo{font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.28em;color:var(--gold-dim);}
+.foot-motto{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:var(--text-dim);}
+.foot-links{display:flex;gap:1.8rem;}
+.foot-links a{font-size:.73rem;color:var(--text-dim);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;}
+.foot-links a:hover{color:var(--gold);}
+
+/* landing tab bar */
+.tab-bar-l{display:flex;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.8rem;width:fit-content;}
+.tab-btn-l{padding:.55rem 1.4rem;background:transparent;border:none;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .2s;border-right:1px solid var(--border);}
+.tab-btn-l:last-child{border-right:none;}
+.tab-btn-l.active{background:rgba(201,168,76,.1);color:var(--gold);}
+.tab-content-l{display:none;}
+.tab-content-l.active{display:block;}
+
+/* Verify steps */
+.vsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:2.5rem;}
+.vstep{background:var(--charcoal);padding:1.8rem 1.4rem;}
+.vstep-num{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--gold-dim);letter-spacing:.13em;margin-bottom:.9rem;}
+.vstep h4{font-size:.83rem;font-weight:500;color:var(--text-primary);margin-bottom:.35rem;}
+.vstep p{font-size:.73rem;color:var(--text-dim);line-height:1.6;}
+
+/* live dot */
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal-light);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* notification */
+.notif{position:fixed;bottom:2rem;right:2rem;background:var(--charcoal-light);border:1px solid var(--teal-dim);border-left:3px solid var(--teal-light);border-radius:4px;padding:.9rem 1.4rem;z-index:9999;transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:310px;}
+.notif.show{transform:translateX(0);}
+.notif-title{font-size:.8rem;font-weight:500;color:var(--teal-light);margin-bottom:.18rem;}
+.notif-msg{font-size:.74rem;color:var(--text-muted);line-height:1.5;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===================== DASHBOARD STYLES (light) ===================== */
+.dapp *{font-family:'DM Sans',sans-serif;}
+.app-header{background:var(--dw);border-bottom:1px solid var(--dbor);padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(61,46,30,.05);}
+.hdr-logo{display:flex;align-items:center;gap:9px;}
+.hdr-logo-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;}
+.hdr-logo-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dc);}
+.hdr-logo-sub{font-size:10px;color:var(--dmut);letter-spacing:1.3px;text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.hdr-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--dgold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--dm);background:rgba(200,169,110,.15);}
+.hdr-name{font-size:13px;color:var(--dm);}
+.btn-back-d{display:flex;align-items:center;gap:5px;padding:6px 14px;background:transparent;border:1px solid var(--dborS);border-radius:60px;color:var(--dm);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-back-d:hover{background:var(--dcreamd);color:var(--dc);}
+
+/* dashboard layout */
+.dash-layout{display:flex;flex:1;overflow:hidden;background:var(--dcream);}
+.sidebar{width:210px;flex-shrink:0;background:var(--dw);border-right:1px solid var(--dbor);padding:1.2rem 0;overflow-y:auto;}
+.sb-section{margin-bottom:1.2rem;}
+.sb-label{font-size:9.5px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dmut);padding:0 1.1rem;margin-bottom:.4rem;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 1.1rem;font-size:13px;color:var(--dm);cursor:pointer;transition:all .15s;}
+.sb-item:hover{background:var(--dcreamd);color:var(--dc);}
+.sb-item.active{background:rgba(200,169,110,.12);color:#7A5520;border-right:3px solid var(--dgold);font-weight:600;}
+.sb-icon{font-size:14px;width:18px;text-align:center;}
+.sb-badge{margin-left:auto;background:var(--dterr);color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px;}
+.main-area{flex:1;overflow-y:auto;background:var(--dcream);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* page hero dark bar */
+.pg-hero{background:var(--charcoal);background-image:radial-gradient(ellipse at 80% 50%,rgba(201,168,76,.09) 0%,transparent 60%);padding:2.4rem 2.2rem;color:#fff;}
+.pg-hero h1{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#F0EAD8;margin-bottom:.35rem;font-weight:300;}
+.pg-hero p{color:rgba(240,234,216,.5);font-size:.88rem;}
+
+/* cards */
+.dcard{background:var(--dw);border:1px solid var(--dbor);border-radius:14px;padding:1.4rem;box-shadow:0 4px 20px rgba(61,46,30,.06);}
+.dcard-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dc);margin-bottom:.9rem;padding-bottom:.7rem;border-bottom:1px solid var(--dbor);display:flex;align-items:center;justify-content:space-between;}
+
+/* stat cards */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;padding:1.3rem 2rem 0;max-width:1400px;margin:0 auto;}
+.scard{background:var(--dw);border:1px solid var(--dbor);border-radius:10px;padding:1.1rem 1.3rem;box-shadow:0 4px 20px rgba(61,46,30,.06);}
+.scard .s-lbl{font-size:11px;color:var(--dmut);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.4rem;}
+.scard .s-val{font-family:'Cormorant Garamond',serif;font-size:1.85rem;color:var(--dc);line-height:1;}
+.scard .s-sub{font-size:11px;color:var(--dsage);margin-top:.28rem;}
+.scard .s-ico{float:right;width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+
+/* content grids */
+.cgrid{padding:1.8rem 2rem;display:grid;grid-template-columns:2fr 1fr;gap:1.8rem;max-width:1400px;margin:0 auto;}
+.cfull{padding:1.8rem 2rem;max-width:1400px;margin:0 auto;}
+
+/* badge */
+.badge-d{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:60px;font-size:11.5px;font-weight:500;}
+.bd-gold{background:rgba(200,169,110,.15);color:#8B5E1A;border:1px solid rgba(200,169,110,.32);}
+.bd-sage{background:rgba(122,158,126,.14);color:#2E6030;border:1px solid rgba(122,158,126,.28);}
+.bd-pend{background:rgba(196,113,90,.1);color:#883322;border:1px solid rgba(196,113,90,.24);}
+.bd-grey{background:var(--dcreamd);color:var(--dm);}
+
+/* buttons dashboard */
+.dbtn-p{padding:9px 20px;border-radius:60px;background:var(--dgold);color:var(--dc);border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.dbtn-p:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.dbtn-s{padding:9px 20px;border-radius:60px;background:var(--dw);color:var(--dm);border:1px solid var(--dborS);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;}
+.dbtn-s:hover{background:var(--dcreamd);}
+.dbtn-g{padding:9px 20px;border-radius:60px;background:var(--dsage);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.dbtn-g:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* NPO cards */
+.npo-grid-d{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem;}
+.npocard{background:var(--dw);border:1px solid var(--dbor);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(61,46,30,.06);transition:all .25s;cursor:pointer;}
+.npocard:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(61,46,30,.12);border-color:var(--dborS);}
+.npocard-hdr{padding:1.1rem 1.1rem .65rem;border-bottom:1px solid var(--dbor);display:flex;align-items:flex-start;gap:10px;}
+.npocard-avatar{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.npocard-name{font-family:'Cormorant Garamond',serif;font-size:.98rem;color:var(--dc);}
+.npocard-body{padding:.9rem 1.1rem;}
+.npocard-desc{font-size:12.5px;color:var(--dl);line-height:1.5;margin-bottom:.65rem;}
+.npocard-foot{padding:.65rem 1.1rem;background:var(--dcream);border-top:1px solid var(--dbor);display:flex;align-items:center;justify-content:space-between;}
+.npocard-amt{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dm);}
+.npocard-amt small{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dmut);display:block;}
+
+/* needs card dashboard */
+.ncrd{background:var(--dw);border:1px solid var(--dbor);border-left:4px solid var(--dgold);border-radius:0 14px 14px 0;padding:1.1rem 1.4rem;margin-bottom:.9rem;box-shadow:0 4px 20px rgba(61,46,30,.06);transition:all .2s;}
+.ncrd:hover{box-shadow:0 10px 36px rgba(61,46,30,.1);}
+.ncrd h4{font-family:'Cormorant Garamond',serif;font-size:.98rem;color:var(--dc);margin-bottom:.35rem;}
+.ncrd p{font-size:12.5px;color:var(--dl);margin-bottom:.65rem;}
+.ncrd-meta{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+
+/* chart bars */
+.cbar-wrap{margin-bottom:.9rem;}
+.cbar-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--dl);margin-bottom:.3rem;}
+.cbar-track{height:7px;background:var(--dcreamd);border-radius:4px;overflow:hidden;}
+.cbar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+
+/* leaderboard */
+.lb-row{display:flex;align-items:center;gap:12px;padding:.8rem 0;border-bottom:1px solid var(--dbor);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-family:'Cormorant Garamond',serif;font-size:1.3rem;width:30px;text-align:center;flex-shrink:0;}
+.lb-info{flex:1;}
+.lb-name{font-size:13.5px;font-weight:500;color:var(--dc);}
+.lb-sub{font-size:11px;color:var(--dmut);}
+.lb-amount{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--dm);flex-shrink:0;}
+
+/* points tiers */
+.pts-tier{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.1rem;border-radius:10px;border:1px solid var(--dbor);margin-bottom:.65rem;background:var(--dw);}
+.pts-tier.active{border-color:var(--dgold);background:rgba(200,169,110,.07);}
+.tier-icon-d{font-size:1.7rem;}
+.tier-name-d{font-weight:600;font-size:.92rem;color:var(--dc);}
+.tier-desc-d{font-size:11px;color:var(--dmut);}
+.tier-pts-d{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dm);}
+
+/* certificate */
+.cert-box{background:var(--dw);border:3px solid var(--dgold);border-radius:12px;padding:1.8rem;text-align:center;position:relative;}
+.cert-box::before{content:'';position:absolute;inset:7px;border:1px solid rgba(200,169,110,.22);border-radius:6px;pointer-events:none;}
+.cert-seal{font-size:2.8rem;margin-bottom:.4rem;}
+.cert-title-d{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--dgold);}
+.cert-amount-d{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--dc);}
+.cert-row-d{display:flex;justify-content:space-between;font-size:11.5px;color:var(--dl);padding:.22rem 0;}
+.cert-hr{border:none;border-top:1px solid var(--dbor);margin:.9rem 0;}
+
+/* timeline */
+.tl-item{display:flex;gap:12px;margin-bottom:.9rem;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--dsage);flex-shrink:0;margin-top:4px;}
+.tl-title{font-size:13px;font-weight:500;color:var(--dc);}
+.tl-sub{font-size:11px;color:var(--dmut);}
+.tl-time{font-size:11px;color:var(--dmut);white-space:nowrap;margin-left:auto;}
+
+/* map placeholder */
+.map-ph{background:linear-gradient(135deg,var(--dcreamd),var(--dcream));border-radius:10px;height:200px;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;overflow:hidden;}
+.map-dot{position:absolute;width:12px;height:12px;background:var(--dgold);border-radius:50%;animation:pulse 2s infinite;border:2px solid var(--dw);}
+
+/* verify steps dash */
+.vsd-step{display:flex;gap:.9rem;align-items:flex-start;padding:1.1rem;border-radius:10px;border:1px solid var(--dbor);background:var(--dw);margin-bottom:.65rem;transition:all .3s;}
+.vsd-step.completed{border-color:rgba(122,158,126,.4);background:rgba(122,158,126,.05);}
+.vsd-step.active{border-color:rgba(200,169,110,.5);background:rgba(200,169,110,.07);}
+.step-number{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;}
+.step-num-done{background:var(--dsage);color:#fff;}
+.step-num-active{background:var(--dgold);color:var(--dc);}
+.step-num-locked{background:var(--dcreamd);color:var(--dmut);}
+.step-content-d h4{font-size:13.5px;font-weight:600;color:var(--dc);margin-bottom:.18rem;}
+.step-content-d p{font-size:12px;color:var(--dmut);}
+
+/* upload area */
+.upload-area{border:1.5px dashed var(--dborS);border-radius:10px;padding:1.4rem;text-align:center;cursor:pointer;transition:all .2s;font-size:13px;color:var(--dl);margin-bottom:.9rem;}
+.upload-area:hover{border-color:var(--dgold);background:rgba(200,169,110,.04);}
+.upload-icon{font-size:2rem;margin-bottom:.4rem;}
+
+/* form */
+.form-group-d{margin-bottom:1.1rem;}
+.form-label-d{display:block;font-size:12px;color:var(--dm);text-transform:uppercase;letter-spacing:.8px;margin-bottom:.4rem;font-weight:500;}
+.form-input-d{width:100%;background:var(--dcream);border:1px solid var(--dbor);color:var(--dc);padding:.65rem .9rem;font-family:'DM Sans',sans-serif;font-size:14px;border-radius:8px;outline:none;transition:border-color .2s;}
+.form-input-d:focus{border-color:var(--dgold);}
+.form-select-d{width:100%;background:var(--dcream);border:1px solid var(--dbor);color:var(--dc);padding:.65rem .9rem;font-family:'DM Sans',sans-serif;font-size:14px;border-radius:8px;outline:none;appearance:none;}
+
+/* auth wrap */
+.auth-wrap{display:flex;align-items:center;justify-content:center;flex:1;padding:2rem;background:var(--dcream);}
+.auth-card{background:var(--dw);border:1px solid var(--dbor);border-radius:20px;padding:2.2rem;width:100%;max-width:420px;box-shadow:0 12px 48px rgba(61,46,30,.12);}
+.auth-logo{text-align:center;margin-bottom:1.8rem;}
+.auth-logo h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--dc);margin-bottom:.2rem;}
+.auth-logo p{font-size:13px;color:var(--dmut);}
+
+/* corp process steps */
+.cp-step{display:flex;gap:1.1rem;margin-bottom:1.3rem;}
+.cp-step-num{width:38px;height:38px;border-radius:50%;background:var(--dgold);color:var(--dc);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;flex-shrink:0;font-weight:600;}
+.cp-step-content{padding-top:6px;}
+.cp-step-content h4{font-weight:600;color:var(--dc);margin-bottom:.18rem;font-size:.9rem;}
+.cp-step-content p{font-size:12.5px;color:var(--dl);}
+
+/* modal */
+.modal-overlay-d{display:none;position:fixed;inset:0;background:rgba(26,20,16,.65);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay-d.open{display:flex;}
+.modal-d{background:var(--dw);border-radius:20px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 48px rgba(61,46,30,.15);}
+.modal-hdr-d{padding:1.4rem;border-bottom:1px solid var(--dbor);display:flex;align-items:center;justify-content:space-between;}
+.modal-hdr-d h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--dc);}
+.modal-close-d{width:30px;height:30px;border-radius:50%;border:none;background:var(--dcreamd);cursor:pointer;font-size:15px;color:var(--dm);}
+.modal-body-d{padding:1.4rem;}
+.modal-foot-d{padding:1.1rem 1.4rem;border-top:1px solid var(--dbor);display:flex;gap:9px;justify-content:flex-end;}
+
+/* choice cards */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.4rem;}
+.choice-card{border:2px solid var(--dbor);border-radius:14px;padding:1.3rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--dw);}
+.choice-card:hover,.choice-card.sel{border-color:var(--dgold);background:rgba(200,169,110,.07);}
+.cc-icon{font-size:2.2rem;margin-bottom:.65rem;}
+.choice-card h4{font-size:.92rem;font-weight:600;color:var(--dc);margin-bottom:.22rem;}
+.choice-card p{font-size:11.5px;color:var(--dl);}
+
+/* info box */
+.info-box-d{background:rgba(122,158,126,.08);border:1px solid rgba(122,158,126,.28);border-radius:10px;padding:.9rem 1.1rem;font-size:12.5px;color:#3A6B3E;margin-bottom:1.1rem;display:flex;gap:7px;align-items:flex-start;}
+.info-box-d strong{display:block;margin-bottom:.2rem;}
+
+.divider-d{text-align:center;position:relative;margin:1.1rem 0;font-size:12px;color:var(--dmut);}
+.divider-d::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--dbor);}
+.divider-d span{background:var(--dw);padding:0 10px;position:relative;}
+
+/* toast */
+.toast-wrap{position:fixed;bottom:1.8rem;right:1.8rem;z-index:2000;}
+.toast{background:var(--charcoal);color:var(--text-primary);padding:10px 18px;border-radius:10px;font-size:13px;margin-top:7px;box-shadow:0 8px 28px rgba(0,0,0,.2);animation:slide-up .3s ease;border-left:3px solid var(--gold);}
+@keyframes slide-up{from{transform:translateY(18px);opacity:0}}
+
+/* NPO impact gallery dashboard */
+.imp-gal-d{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1rem;}
+.imp-img-d{aspect-ratio:1;border-radius:8px;background:var(--dcreamd);border:1px solid var(--dbor);display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;overflow:hidden;position:relative;}
+.imp-add-d{aspect-ratio:1;border-radius:8px;border:1.5px dashed var(--dborS);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:.22rem;transition:all .2s;}
+.imp-add-d:hover{border-color:var(--dgold);background:rgba(200,169,110,.04);}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px;}
+
+@media(max-width:900px){nav{padding:0 1.4rem;}.nav-links{display:none;}section.lnd{padding:3.5rem 1.4rem;}.hero{padding:6.5rem 1.4rem 3rem;}.how-grid,.corp-grid-l,.npo-grid-l{grid-template-columns:1fr;gap:2.5rem;}.price-grid{grid-template-columns:1fr;}.wall-stats{grid-template-columns:repeat(2,1fr);}.wall-stories{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(2,1fr);padding:1rem;}.cgrid{grid-template-columns:1fr;padding:1rem;}.cfull{padding:1rem;}.sidebar{width:185px;}}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     SCREEN 1: PUBLIC LANDING PAGE (dark luxury)
+     ================================================================ -->
+<div id="screen-landing" class="screen active">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showScreen('screen-landing')">Q T M</div>
+  <ul class="nav-links">
+    <li><a href="#how">Platform</a></li>
+    <li><a href="#corps">Corporations</a></li>
+    <li><a href="#npos-sec">NPOs</a></li>
+    <li><a href="#impact-sec">Impact</a></li>
+    <li><a href="#contact-sec">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-ghost" onclick="showScreen('screen-npo-entry')">NPO Portal</button>
+    <button class="btn-primary-dark btn-lg" onclick="showScreen('screen-corp-login')">Corporate Login</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Introducing QTM · Quod Tango Muto</p>
+    <h1 class="hero-headline">The <em>clasp</em> that connects<br>both worlds.</h1>
+    <p class="hero-sub">South Africa's verified CSR marketplace — connecting corporations with trusted NPOs to create measurable, lasting community impact.</p>
+    <div class="hero-actions">
+      <button class="btn-primary-dark btn-lg" onclick="showScreen('screen-corp-login')">Corporate Login</button>
+      <button class="btn-ghost btn-lg" onclick="showScreen('screen-npo-entry')">NPO Portal</button>
+    </div>
+    <div class="clasp-graphic">
+      <svg viewBox="0 0 700 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 60 130 Q 175 30 290 130" stroke="#C9A84C" stroke-width="2" fill="none" opacity=".65"/>
+        <path d="M 290 130 Q 405 30 520 130" stroke="#4AA89A" stroke-width="2" fill="none" opacity=".65"/>
+        <circle cx="290" cy="130" r="17" fill="#1A1A18" stroke="#C9A84C" stroke-width="1.5"/>
+        <circle cx="290" cy="130" r="7" fill="#C9A84C" opacity=".45"/>
+        <circle cx="290" cy="130" r="3" fill="#C9A84C"/>
+        <text x="72" y="162" fill="#6A6460" font-size="10" font-family="DM Mono,monospace" letter-spacing="3">CORPORATION</text>
+        <text x="455" y="162" fill="#6A6460" font-size="10" font-family="DM Mono,monospace" letter-spacing="3">NPO</text>
+        <text x="263" y="172" fill="#C9A84C" font-size="12" font-family="DM Mono,monospace" letter-spacing="6">Q T M</text>
+        <text x="108" y="112" fill="#6A6460" font-size="9" font-family="DM Mono,monospace">BEE SED Funds</text>
+        <text x="358" y="112" fill="#6A6460" font-size="9" font-family="DM Mono,monospace">Community Impact</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <div class="ticker-item"><div class="t-dot"></div>Beneficiaries <span class="t-val">14,800+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Facilitated <span class="t-val">R300M+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Verified NPOs <span class="t-val">213</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Corporations <span class="t-val">42</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>BEE SED Certs <span class="t-val">1,840+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Section 18A Receipts <span class="t-val">2,100+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Provinces <span class="t-val">9/9</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Beneficiaries <span class="t-val">14,800+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Facilitated <span class="t-val">R300M+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Verified NPOs <span class="t-val">213</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Corporations <span class="t-val">42</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>BEE SED Certs <span class="t-val">1,840+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Section 18A Receipts <span class="t-val">2,100+</span></div>
+    <div class="ticker-item"><div class="t-dot"></div>Provinces <span class="t-val">9/9</span></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="lnd how-section" id="how">
+  <div class="container">
+    <div class="how-grid">
+      <div>
+        <p class="s-label reveal">How QTM Works</p>
+        <h2 class="s-title reveal">Every rand tells <em>a story.</em></h2>
+        <p class="s-sub reveal">QTM bridges the gap between corporate CSR budgets and deserving NPOs — automating compliance, verifying impact, and removing every point of friction.</p>
+        <div class="how-steps reveal">
+          <div class="step-item"><div class="step-num-n">01</div><div class="step-content"><h3>Browse verified NPO catalogue</h3><p>Filter by province, sector, BEE SED category and Section 18A eligibility. Every NPO independently verified.</p></div></div>
+          <div class="step-item"><div class="step-num-n">02</div><div class="step-content"><h3>Select a Needs Card and fund in minutes</h3><p>Costed, specific funding requests. Know exactly what your rand achieves before you commit.</p></div></div>
+          <div class="step-item"><div class="step-num-n">03</div><div class="step-content"><h3>Compliance pack generated instantly</h3><p>Branded certificate, Section 18A receipt and BEE SED record — auto-generated the moment payment confirms.</p></div></div>
+          <div class="step-item"><div class="step-num-n">04</div><div class="step-content"><h3>NPO delivers, uploads impact proof</h3><p>After programme completion, NPOs upload photos and beneficiary numbers — directly visible in your dashboard.</p></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="dash-preview">
+          <div class="dash-hdr"><div class="ddots"><div class="ddot" style="background:#C9A84C;opacity:.4;"></div><div class="ddot" style="background:#8A6E30;opacity:.4;"></div><div class="ddot" style="background:#3E3E38;"></div></div><div class="dash-title-t">QTM Corporate Dashboard — FNB Foundation</div></div>
+          <div class="dash-body">
+            <div class="dstat-row">
+              <div class="dstat"><div class="dstat-val">R4.2M</div><div class="dstat-lbl">YTD Deployed</div></div>
+              <div class="dstat"><div class="dstat-val">18.5</div><div class="dstat-lbl">BEE Pts</div></div>
+              <div class="dstat"><div class="dstat-val">2,840</div><div class="dstat-lbl">Beneficiaries</div></div>
+            </div>
+            <div class="dbar-item"><div class="dbar-meta"><span>Education</span><span style="color:var(--gold)">R1.8M</span></div><div class="dbar-track"><div class="dbar-fill" style="width:64%;background:var(--gold);"></div></div></div>
+            <div class="dbar-item"><div class="dbar-meta"><span>Youth Dev.</span><span style="color:var(--teal-light)">R1.2M</span></div><div class="dbar-track"><div class="dbar-fill" style="width:43%;background:var(--teal-light);"></div></div></div>
+            <div class="dbar-item"><div class="dbar-meta"><span>Health</span><span style="color:var(--gold-dim)">R0.8M</span></div><div class="dbar-track"><div class="dbar-fill" style="width:28%;background:var(--gold-dim);"></div></div></div>
+            <div style="margin-top:.8rem;">
+              <div class="dnpo-item"><span class="dnpo-name">Soweto Skills Hub</span><span class="dbadge dbg">Verified ✓</span></div>
+              <div class="dnpo-item"><span class="dnpo-name">Cape Flats Youth Academy</span><span class="dbadge dbt">Funded</span></div>
+              <div class="dnpo-item"><span class="dnpo-name">Limpopo Health Circle</span><span class="dbadge dbg">Verified ✓</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORPORATE -->
+<section class="lnd" id="corps" style="background:var(--charcoal);">
+  <div class="container">
+    <p class="s-label reveal">For Corporations</p>
+    <h2 class="s-title reveal">BEE SED compliance,<br><span class="gld">automated.</span></h2>
+    <p class="s-sub reveal">From manual spreadsheets and audit anxiety to one-click compliance packs. QTM replaces months of vetting with minutes of confident giving.</p>
+    <div class="tab-bar-l reveal">
+      <button class="tab-btn-l active" onclick="switchLandTab('features',this)">Features</button>
+      <button class="tab-btn-l" onclick="switchLandTab('downloads',this)">Downloads</button>
+      <button class="tab-btn-l" onclick="switchLandTab('onboarding',this)">Onboarding</button>
+    </div>
+    <div id="lt-features" class="tab-content-l active">
+      <div class="feat-grid">
+        <div class="feat-card reveal"><div class="feat-icon">📊</div><h3>Live BEE SED Dashboard</h3><p>Real-time tracking of spend vs annual target. Province breakdown, sector split, beneficiary counter — board-ready at all times.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon">🏅</div><h3>Instant Compliance Packs</h3><p>Branded impact certificate, Section 18A tax receipt, and BEE SED compliance record — auto-generated on donation confirmation.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon">🔍</div><h3>Verified NPO Catalogue</h3><p>Every NPO checked against the DSD register, bank-verified, and governance-assessed. Fund with absolute confidence.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon">📄</div><h3>One-Click Board Report</h3><p>PDF executive summary of all CSR activity — total rand, BEE progress, beneficiary numbers, NPO partnerships — instantly.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon">🤝</div><h3>Co-Funding Requests</h3><p>Partner with other corporates to jointly fund large projects. Split Needs Cards and share the BEE SED points.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon">📅</div><h3>Multi-Year Pledge Management</h3><p>Commit funding over 2–3 years, giving NPOs predictability to plan ambitious long-term programmes.</p></div>
+      </div>
+    </div>
+    <div id="lt-downloads" class="tab-content-l">
+      <div class="dl-grid">
+        <div class="dl-card" onclick="toast('⬇️ Generating BEE SED Compliance Report — live data compiled')"><div class="dl-icon">📑</div><h4>BEE SED Compliance Report</h4><p>Full audit-ready SED report with points earned, spend categories and BEE scorecard import data.</p><div class="dl-meta"><span class="dl-type">XLSX / PDF</span><button class="dl-btn">Download ↓</button></div></div>
+        <div class="dl-card" onclick="toast('⬇️ Generating Impact Certificate Bundle — all certs compiled')"><div class="dl-icon">🏆</div><h4>Impact Certificate Bundle</h4><p>All branded impact certificates for the period — co-branded with your logo and QTM verification seal.</p><div class="dl-meta"><span class="dl-type">PDF Pack</span><button class="dl-btn">Download ↓</button></div></div>
+        <div class="dl-card" onclick="toast('⬇️ Generating Section 18A Tax Receipts — SARS compliant')"><div class="dl-icon">🧾</div><h4>Section 18A Tax Receipts</h4><p>SARS-compliant tax receipts for all qualifying donations — ready for your finance team and tax submission.</p><div class="dl-meta"><span class="dl-type">PDF</span><button class="dl-btn">Download ↓</button></div></div>
+        <div class="dl-card" onclick="toast('⬇️ Generating Board-Ready Annual Report — PDF compiling')"><div class="dl-icon">📋</div><h4>Board-Ready Annual Report</h4><p>Executive-level CSR summary with impact photos, beneficiary numbers and BEE progress — board presentation ready.</p><div class="dl-meta"><span class="dl-type">PDF</span><button class="dl-btn">Download ↓</button></div></div>
+        <div class="dl-card" onclick="toast('⬇️ Generating NPO Payment Confirmations — timestamped records')"><div class="dl-icon">💸</div><h4>NPO Payment Confirmations</h4><p>Proof of fund delivery to each NPO's verified bank account — timestamped and QTM-sealed.</p><div class="dl-meta"><span class="dl-type">PDF</span><button class="dl-btn">Download ↓</button></div></div>
+        <div class="dl-card" onclick="toast('📊 Live CSR Spend Tracker syncing — auto-updated workbook ready')"><div class="dl-icon">📈</div><h4>CSR Spend Tracker (Live)</h4><p>Real-time Excel workbook tracking all donations by province, sector, NPO and date. Replaces your manual spreadsheets.</p><div class="dl-meta"><span class="dl-type">XLSX Live</span><button class="dl-btn">Download ↓</button></div></div>
+      </div>
+    </div>
+    <div id="lt-onboarding" class="tab-content-l">
+      <div class="vsteps">
+        <div class="vstep"><div class="vstep-num">STEP 01</div><h4>Discovery & Demo</h4><p>30-minute live demo. Your logo on a real certificate. BEE SED points projected.</p></div>
+        <div class="vstep"><div class="vstep-num">STEP 02</div><h4>Tailored Proposal</h4><p>Custom proposal within 48 hours. Sign MSA digitally via DocuSign.</p></div>
+        <div class="vstep"><div class="vstep-num">STEP 03</div><h4>Account Live in 24hrs</h4><p>Branded dashboard — logo, colours, dedicated account manager — live within 24 hours.</p></div>
+        <div class="vstep"><div class="vstep-num">STEP 04</div><h4>Curated NPO Shortlist</h4><p>Your account manager curates 10–15 verified NPOs matching your sector and province.</p></div>
+        <div class="vstep"><div class="vstep-num">STEP 05</div><h4>First Donation</h4><p>Make your first donation. Full compliance pack generated instantly.</p></div>
+        <div class="vstep"><div class="vstep-num">STEP 06</div><h4>Quarterly Reviews</h4><p>Formal QTM Business Reviews every quarter — impact data, BEE progress, recommendations.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:2rem;"><button class="btn-primary-dark btn-lg" onclick="showScreen('screen-corp-login')">Access Corporate Portal →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- NPOs section -->
+<section class="lnd" id="npos-sec" style="background:var(--charcoal-mid);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:4.5rem;align-items:start;" class="npo-grid-l">
+      <div>
+        <p class="s-label reveal">For NPOs</p>
+        <h2 class="s-title reveal">Get funded.<br><em>Be seen.</em><br>Create change.</h2>
+        <p class="s-sub reveal">QTM is free for NPOs. Post Needs Cards, get discovered by corporate funders, receive same-day payouts and tell your impact story.</p>
+        <div class="reveal" style="margin-top:1rem;">
+          <div class="imp-upload">
+            <div class="imp-uhdr"><div class="imp-utitle">Impact Gallery — Upload Your Stories</div><div class="imp-cnt">6 / 12 uploaded</div></div>
+            <div class="imp-gallery">
+              <div class="imp-img" style="background:linear-gradient(135deg,#1A5048,#2C2C28);" onclick="toast('📸 Viewing: 30 youth graduates — Soweto Digital Academy')">🎓</div>
+              <div class="imp-img" style="background:linear-gradient(135deg,#26215C,#2C2C28);" onclick="toast('📸 Viewing: Library opening — Langa Primary School')">📚</div>
+              <div class="imp-img" style="background:linear-gradient(135deg,#3E2210,#2C2C28);" onclick="toast('📸 Viewing: Women\'s entrepreneurship graduation')">👩‍💼</div>
+              <div class="imp-img" style="background:linear-gradient(135deg,#1A1A18,#2C2C28);" onclick="toast('📸 Viewing: Health screening — 450 community members')">🏥</div>
+              <div class="imp-img" style="background:linear-gradient(135deg,#0A2A20,#1A1A18);" onclick="toast('📸 Viewing: Youth football tournament — 120 participants')">⚽</div>
+              <div class="imp-add" onclick="toast('📤 Upload portal opens — add impact photos with beneficiary counts')"><div class="imp-add-icon">＋</div><div class="imp-add-lbl">Add Photo</div></div>
+            </div>
+            <div class="imp-stats"><div class="imp-stat"><div class="imp-sv">2,840</div><div class="imp-sl">Beneficiaries</div></div><div class="imp-stat"><div class="imp-sv">6</div><div class="imp-sl">Programmes</div></div><div class="imp-stat"><div class="imp-sv">R450K</div><div class="imp-sl">Received</div></div></div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;"><button class="btn-ghost btn-lg" onclick="showScreen('screen-npo-entry')">Join as NPO →</button></div>
+      </div>
+      <div class="reveal">
+        <p style="font-size:.7rem;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.9rem;">Sample Needs Card</p>
+        <div class="nc-card">
+          <div class="nc-hdr"><div class="nc-lbl">Needs Card · Active</div><div class="nc-ver">✓ QTM Verified NPO</div></div>
+          <div class="nc-body">
+            <h3 class="nc-title">Digital Literacy Programme for 30 Youth in Soweto</h3>
+            <div class="nc-tags"><span class="nc-tag">Youth Dev.</span><span class="nc-tag">Education</span><span class="nc-tag">Section 18A</span><span class="nc-tag">Gauteng</span></div>
+            <p class="nc-desc">30 young people aged 18–25 trained in MS Office, digital job-seeking and email. Certificates issued on completion. Programme runs 3 months in Soweto community hall.</p>
+            <div class="nc-metrics"><div class="nc-metric"><div class="nc-mval">R45K</div><div class="nc-mlbl">Target</div></div><div class="nc-metric"><div class="nc-mval">2.5</div><div class="nc-mlbl">BEE Pts</div></div><div class="nc-metric"><div class="nc-mval">30</div><div class="nc-mlbl">People</div></div></div>
+            <div class="nc-prog"><div class="nc-pmeta"><span>R28,500 raised</span><span style="color:var(--teal-light)">63% funded</span></div><div class="nc-track"><div class="nc-fill" style="width:63%;"></div></div></div>
+            <p style="font-size:.7rem;color:var(--text-dim);margin-bottom:.9rem;">NPO: <span style="color:var(--teal-light)">Soweto Skills Hub</span> · Expires in 47 days · Co-funding welcome</p>
+            <div class="nc-acts"><button class="btn-fund-l" onclick="showScreen('screen-corp-login')">Fund This Card</button><button class="btn-view-l" onclick="toast('👀 Viewing Soweto Skills Hub full NPO profile')">View NPO</button></div>
+          </div>
+        </div>
+        <div style="margin-top:.9rem;background:var(--charcoal-card);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.1rem;cursor:pointer;" onclick="toast('📋 Opening: Women\'s Entrepreneurship Boot Camp — R120,000 · 2.8 BEE pts')">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:.45rem;"><span style="font-size:.83rem;color:var(--text-primary);">Women's Entrepreneurship Boot Camp</span><span style="font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);">R120K</span></div>
+          <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.55rem;"><span class="nc-tag">Women</span><span class="nc-tag">Cape Town</span><span class="nc-tag">2.8 BEE Pts</span></div>
+          <div class="nc-track"><div class="nc-fill" style="width:40%;"></div></div>
+          <div style="font-size:.68rem;color:var(--text-dim);margin-top:.28rem;">40% funded · Ubuntu Women's Hub</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT WALL -->
+<section class="lnd" id="impact-sec" style="background:var(--charcoal);">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;">
+      <div><p class="s-label">Impact Wall</p><h2 class="s-title reveal">Every rand leaves a <em>mark.</em></h2></div>
+      <div style="display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.63rem;color:var(--teal-light);"><div class="live-dot"></div>Updated Monthly</div>
+    </div>
+    <div class="wall-stats reveal">
+      <div class="wstat"><div class="wstat-val">14.8K</div><div class="wstat-lbl">Beneficiaries Reached</div></div>
+      <div class="wstat"><div class="wstat-val">R300M+</div><div class="wstat-lbl">Donations Facilitated</div></div>
+      <div class="wstat"><div class="wstat-val">213</div><div class="wstat-lbl">Verified NPOs</div></div>
+      <div class="wstat"><div class="wstat-val">9/9</div><div class="wstat-lbl">Provinces Active</div></div>
+    </div>
+    <div class="wall-stories reveal">
+      <div class="wstory"><div class="wsnpo">Soweto Digital Academy</div><div class="wsquote">"QTM connected us to FNB Foundation in 2 weeks. 30 learners trained — 18 now employed. This changed our community."</div><div style="display:flex;justify-content:space-between;align-items:center;"><div class="wsmeta">Sipho Mokoena · Director</div><div class="wsamount">R250,000</div></div></div>
+      <div class="wstory"><div class="wsnpo">Ubuntu Women's Hub</div><div class="wsquote">"For 8 years we could not get consistent corporate funding. QTM gave us visibility we never had. Three corporates fund us annually now."</div><div style="display:flex;justify-content:space-between;align-items:center;"><div class="wsmeta">Nomsa Dlamini · Founder</div><div class="wsamount">R480,000</div></div></div>
+      <div class="wstory"><div class="wsnpo">Limpopo Health Circle</div><div class="wsquote">"A rural clinic receiving corporate CSR funding was unthinkable before QTM. Now we serve 450 community members a month."</div><div style="display:flex;justify-content:space-between;align-items:center;"><div class="wsmeta">Dr. Lerato Sithole · Director</div><div class="wsamount">R180,000</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="lnd" id="contact-sec" style="background:var(--charcoal-mid);">
+  <div class="container" style="text-align:center;">
+    <p class="s-label reveal">Contact</p>
+    <h2 class="s-title reveal">Get in <em>touch.</em></h2>
+    <p class="s-sub reveal" style="margin:0 auto 2rem;">Interested in partnering with QTM or learning more about our platform? Reach out to us directly.</p>
+    <a href="mailto:hello@quadtangomutoafrica.com" style="display:inline-block;font-family:'DM Mono',monospace;font-size:1.05rem;letter-spacing:.08em;color:var(--gold);border:1px solid var(--border-strong);padding:1rem 2.2rem;border-radius:2px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='transparent'">hello@quadtangomutoafrica.com</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <h2 class="cta-title">What you <em>touch,</em><br>you will change.</h2>
+    <p class="cta-sub">Join the corporations and NPOs already transforming South Africa's CSR landscape through trust, transparency and technology.</p>
+    <div class="cta-btns">
+      <button class="btn-primary-dark btn-lg" onclick="showScreen('screen-corp-login')">Corporate Portal</button>
+      <button class="btn-ghost btn-lg" onclick="showScreen('screen-npo-entry')">NPO Portal</button>
+    </div>
+    <p style="margin-top:1.8rem;font-family:'DM Mono',monospace;font-size:.63rem;color:var(--text-dim);letter-spacing:.18em;">QUOD TANGO MUTO · SOUTH AFRICA · AFRICA · GLOBAL</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo">Q T M</div>
+    <div class="foot-motto">"What I Touch, I Change"</div>
+    <div class="foot-links"><a href="#how">Platform</a><a href="#corps">Corporations</a><a href="#npos-sec">NPOs</a><a href="#impact-sec">Impact</a><a href="mailto:hello@quadtangomutoafrica.com">Contact</a></div>
+  </div>
+  <p style="text-align:center;margin-top:1.8rem;font-size:.66rem;color:var(--text-dim);">© 2026 Quod Tango Muto (Pty) Ltd · Johannesburg, South Africa · CONFIDENTIAL</p>
+</footer>
+</div><!-- end screen-landing -->
+
+
+<!-- ================================================================
+     SCREEN 2: CORP LOGIN
+     ================================================================ -->
+<div id="screen-corp-login" class="screen dapp" style="background:var(--dcream);">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div style="width:52px;height:52px;background:var(--dgold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--dc);margin:0 auto 10px;">Q</div>
+        <h2>Corporate Portal</h2><p>Sign in to your QTM dashboard</p>
+      </div>
+      <div class="info-box-d"><span>🏢</span><div><strong>Partnership Note</strong>Corporations join QTM through a partnership agreement signed with our team. Once your contract is finalised, your personalised login is ready within 24 hours.</div></div>
+      <div class="form-group-d"><label class="form-label-d">Corporate Email</label><input type="email" class="form-input-d" value="csr@fnbfoundation.co.za"></div>
+      <div class="form-group-d"><label class="form-label-d" style="display:flex;justify-content:space-between;">Password <a style="color:var(--dgold);cursor:pointer;font-size:12px;font-weight:400;">Forgot password?</a></label><input type="password" class="form-input-d" value="••••••••••"></div>
+      <button class="dbtn-p" style="width:100%;padding:12px;font-size:14.5px;" onclick="showScreen('screen-corp-dash')">Sign In to Dashboard →</button>
+      <div class="divider-d"><span>new to QTM?</span></div>
+      <div style="text-align:center;font-size:13px;color:var(--dmut);">Corporations partner with QTM before access. <a style="color:var(--dgold);cursor:pointer;" onclick="showScreen('screen-corp-process')">Learn about partnership →</a></div>
+      <div style="text-align:center;margin-top:1rem;"><button class="btn-back-d" onclick="showScreen('screen-landing')">← Back to Home</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 3: CORP PROCESS
+     ================================================================ -->
+<div id="screen-corp-process" class="screen dapp" style="background:var(--dcream);">
+  <div class="auth-wrap" style="align-items:flex-start;padding-top:2.5rem;">
+    <div style="max-width:580px;width:100%;">
+      <div style="text-align:center;margin-bottom:1.8rem;"><div style="width:52px;height:52px;background:var(--dgold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--dc);margin:0 auto 10px;">Q</div><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--dc);">Become a Corporate Partner</h2><p style="color:var(--dmut);font-size:13.5px;">Our partnership process ensures a fully tailored QTM experience</p></div>
+      <div class="dcard" style="margin-bottom:1rem;">
+        <div class="dcard-title">Partnership Journey</div>
+        <div class="cp-step"><div class="cp-step-num">1</div><div class="cp-step-content"><h4>Discovery & Demo</h4><p>30-minute personalised demo — your logo on a live impact certificate, projected BEE SED points shown.</p></div></div>
+        <div class="cp-step"><div class="cp-step-num">2</div><div class="cp-step-content"><h4>Proposal & MSA</h4><p>Tailored proposal within 48 hours. Sign your MSA digitally via DocuSign — legally sound and professionally presented.</p></div></div>
+        <div class="cp-step"><div class="cp-step-num">3</div><div class="cp-step-content"><h4>QTM Builds Your Platform</h4><p>Branded account set up within 24 hours — your logo, colours, and a dedicated account manager assigned.</p></div></div>
+        <div class="cp-step"><div class="cp-step-num">4</div><div class="cp-step-content"><h4>NPO Shortlist & First Funding</h4><p>10–15 verified NPOs curated matching your sector, province, and BEE SED requirements — ready in week one.</p></div></div>
+        <div class="cp-step"><div class="cp-step-num">5</div><div class="cp-step-content"><h4>Dashboard Goes Live</h4><p>Full access: browse NPOs, fund Needs Cards, track impact, generate automated BEE SED compliance certificates.</p></div></div>
+      </div>
+      <div class="dcard" style="margin-bottom:1.4rem;"><div class="dcard-title">Contact Us</div><div style="text-align:center;padding:1rem 0;"><a href="mailto:hello@quadtangomutoafrica.com" style="font-family:'DM Mono',monospace;font-size:.95rem;color:var(--dgold);text-decoration:none;">hello@quadtangomutoafrica.com</a></div></div>
+      <div style="display:flex;gap:.9rem;"><button class="dbtn-p" style="flex:1;padding:12px;" onclick="showScreen('screen-corp-login')">Sign In / Book Demo →</button><button class="btn-back-d" onclick="showScreen('screen-landing')">← Home</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 4: CORP DASHBOARD (full internal platform)
+     ================================================================ -->
+<div id="screen-corp-dash" class="screen dapp">
+  <header class="app-header">
+    <div class="hdr-logo"><div class="hdr-logo-icon" style="background:var(--dgold);color:var(--dc);">Q</div><div><div class="hdr-logo-name">QTM Platform</div><div class="hdr-logo-sub">FNB Foundation</div></div></div>
+    <div class="hdr-right"><span class="badge-d bd-gold">🏆 Gold Tier</span><div class="hdr-avatar">LC</div><span class="hdr-name">Lerato Chauke, CSR Lead</span><button class="btn-back-d" onclick="showScreen('screen-landing')">← Home</button></div>
+  </header>
+  <div class="dash-layout">
+    <nav class="sidebar">
+      <div class="sb-section"><div class="sb-label">Overview</div>
+        <div class="sb-item active" onclick="switchCorpTab('home',this)"><span class="sb-icon">🏠</span>Dashboard</div>
+        <div class="sb-item" onclick="switchCorpTab('npos',this)"><span class="sb-icon">🔍</span>Browse NPOs</div>
+        <div class="sb-item" onclick="switchCorpTab('funding',this)"><span class="sb-icon">💳</span>Fund Needs Cards <span class="sb-badge">12</span></div>
+      </div>
+      <div class="sb-section"><div class="sb-label">Compliance</div>
+        <div class="sb-item" onclick="switchCorpTab('compliance',this)"><span class="sb-icon">📜</span>Certificates & Docs</div>
+        <div class="sb-item" onclick="switchCorpTab('tracking',this)"><span class="sb-icon">📍</span>Impact Tracking</div>
+        <div class="sb-item" onclick="switchCorpTab('reports',this)"><span class="sb-icon">📊</span>Reports</div>
+      </div>
+      <div class="sb-section"><div class="sb-label">Recognition</div>
+        <div class="sb-item" onclick="switchCorpTab('leaderboard',this)"><span class="sb-icon">🏆</span>Leaderboard</div>
+        <div class="sb-item" onclick="switchCorpTab('points',this)"><span class="sb-icon">💎</span>Points & Tiers</div>
+      </div>
+    </nav>
+    <div class="main-area">
+
+      <!-- HOME TAB -->
+      <div id="corp-home" class="tab-panel active">
+        <div class="pg-hero"><h1>Welcome back, Lerato 👋</h1><p>FNB Foundation · Q1 2026 · Your BEE SED target is 82% achieved — you're on track.</p></div>
+        <div class="stats-row">
+          <div class="scard"><div class="s-ico" style="background:rgba(200,169,110,.1);">💰</div><div class="s-lbl">YTD Deployed</div><div class="s-val">R8.2M</div><div class="s-sub">↑ 24% vs last year</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(122,158,126,.1);">⭐</div><div class="s-lbl">BEE SED Points</div><div class="s-val">87.4</div><div class="s-sub">12.6 to Platinum</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(196,113,90,.1);">👥</div><div class="s-lbl">Beneficiaries</div><div class="s-val">14,820</div><div class="s-sub">Across 6 provinces</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(200,169,110,.08);">🤝</div><div class="s-lbl">NPO Partners</div><div class="s-val">28</div><div class="s-sub">3 new this quarter</div></div>
+        </div>
+        <div class="cgrid" style="margin-top:1.5rem;">
+          <div>
+            <div class="dcard" style="margin-bottom:1.5rem;">
+              <div class="dcard-title">Spending by Sector<button class="dbtn-s" style="padding:5px 12px;font-size:12px;" onclick="toast('⬇️ Sector report downloading...')">Download</button></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Education</span><span>R3.2M · 6,200 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dgold);width:78%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Youth Development</span><span>R2.4M · 4,100 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dsage);width:58%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Health</span><span>R1.1M · 2,300 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dterr);width:27%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Women's Empowerment</span><span>R0.9M · 1,620 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:#8B7AC4;width:22%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Environment</span><span>R0.6M · 600 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:#5A9EA0;width:14%"></div></div></div>
+            </div>
+            <div class="dcard">
+              <div class="dcard-title">Recent Transactions</div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R45,000 — Soweto Digital Academy</div><div class="tl-sub">Digital Literacy · BEE SED cert issued</div></div><div class="tl-time">12 Jan</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">R120,000 — Limpopo Schools Connect</div><div class="tl-sub">Rural Library Project · Section 18A confirmed</div></div><div class="tl-time">10 Jan</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dterr)"></div><div style="flex:1"><div class="tl-title">R80,000 — WC Women Rising</div><div class="tl-sub">Entrepreneurship cohort · Impact report pending</div></div><div class="tl-time">5 Jan</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R95,000 — Cape Health Community</div><div class="tl-sub">Health screening day · 450 beneficiaries</div></div><div class="tl-time">2 Jan</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="dcard" style="margin-bottom:1.5rem;">
+              <div class="dcard-title">BEE SED Progress</div>
+              <div style="text-align:center;padding:.5rem 0 1rem;">
+                <div style="font-size:2.8rem;">🏆</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--dgold);">Gold Tier</div>
+                <div style="font-size:12px;color:var(--dmut);margin-bottom:1rem;">87.4 / 100 points</div>
+                <div style="background:var(--dcreamd);border-radius:6px;height:10px;overflow:hidden;margin-bottom:.4rem;"><div style="background:var(--dgold);height:100%;width:87%;border-radius:6px;"></div></div>
+                <div style="font-size:12px;color:var(--dsage);">12.6 points to Platinum status</div>
+              </div>
+            </div>
+            <div class="dcard" style="margin-bottom:1.5rem;">
+              <div class="dcard-title">Recommended NPOs</div>
+              <div style="font-size:12px;color:var(--dmut);margin-bottom:.9rem;">Curated for your SED focus &amp; province</div>
+              <div class="npocard" style="margin-bottom:.7rem;" onclick="openFundModal('Eastern Cape Skills Hub','🎓','R55,000','Youth Skills Programme')">
+                <div class="npocard-hdr"><div class="npocard-avatar" style="background:#FEF3E0;">🎓</div><div><div class="npocard-name">Eastern Cape Skills Hub</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span><span class="badge-d bd-gold" style="font-size:10px;">18A</span></div></div></div>
+                <div class="npocard-foot"><div class="npocard-amt">3.1 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();openFundModal('Eastern Cape Skills Hub','🎓','R55,000','Youth Skills Programme')">Fund Now</button></div>
+              </div>
+              <div class="npocard" onclick="openFundModal('Durban Food Garden','🌱','R38,000','Community Food Garden')">
+                <div class="npocard-hdr"><div class="npocard-avatar" style="background:#E8F0E8;">🌱</div><div><div class="npocard-name">Durban Food Garden</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span></div></div></div>
+                <div class="npocard-foot"><div class="npocard-amt">1.9 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();openFundModal('Durban Food Garden','🌱','R38,000','Community Food Garden')">Fund Now</button></div>
+              </div>
+            </div>
+            <div class="dcard">
+              <div class="dcard-title">Your Account Manager</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:.9rem;"><div style="width:42px;height:42px;border-radius:50%;background:rgba(200,169,110,.15);border:2px solid var(--dgold);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">👩🏾‍💼</div><div><div style="font-weight:600;color:var(--dc);">Ayanda Khumalo</div><div style="font-size:11.5px;color:var(--dmut);">Corporate Partnerships Lead · QTM</div></div></div>
+              <div style="font-size:12.5px;color:var(--dl);margin-bottom:.75rem;">Here to support your CSR journey. Your next quarterly review is scheduled for 15 March 2026.</div>
+              <div style="display:flex;gap:7px;"><button class="dbtn-g" style="flex:1;padding:7px;font-size:12px;" onclick="toast('💬 Opening WhatsApp chat with Ayanda...')">💬 WhatsApp</button><button class="dbtn-s" style="flex:1;padding:7px;font-size:12px;" onclick="toast('✉️ Email opened to Ayanda')">✉️ Email</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BROWSE NPOs TAB -->
+      <div id="corp-npos" class="tab-panel">
+        <div class="pg-hero"><h1>Browse Verified NPOs</h1><p>Filtered for your sector focus and province preference — every NPO independently verified</p></div>
+        <div class="cfull">
+          <div style="display:flex;gap:.9rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+            <select class="form-select-d" style="width:auto;flex:1;"><option>All Provinces</option><option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Limpopo</option><option>Eastern Cape</option></select>
+            <select class="form-select-d" style="width:auto;flex:1;"><option>All Sectors</option><option>Education</option><option>Youth Development</option><option>Health</option><option>Women's Empowerment</option><option>Environment</option></select>
+            <select class="form-select-d" style="width:auto;flex:1;"><option>All BEE Pts</option><option>1+ pts</option><option>2+ pts</option><option>3+ pts</option></select>
+            <button class="dbtn-p" onclick="toast('🔍 Filtering NPO catalogue...')">Filter</button>
+          </div>
+          <div class="npo-grid-d">
+            <div class="npocard" onclick="openFundModal('Soweto Digital Academy','🎓','R45,000','Digital Literacy Programme')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#FEF3E0;">🎓</div><div><div class="npocard-name">Soweto Digital Academy</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span><span class="badge-d bd-gold" style="font-size:10px;">18A</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Digital literacy and job-seeking skills for unemployed youth in Soweto townships — 3-month cohorts, certified completion.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">🎓 Education</span><span class="badge-d bd-grey" style="font-size:10px;">📍 Gauteng</span></div></div><div class="npocard-foot"><div class="npocard-amt">2.5 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+            <div class="npocard" onclick="openFundModal('Ubuntu Women Hub','💪','R80,000','Women Entrepreneurship Cohort')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#FDF5E0;">💪</div><div><div class="npocard-name">Ubuntu Women's Hub</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span><span class="badge-d bd-gold" style="font-size:10px;">18A</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Business training, mentorship and micro-loan access for women entrepreneurs in Khayelitsha and Mitchell's Plain.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">💪 Women</span><span class="badge-d bd-grey" style="font-size:10px;">📍 Western Cape</span></div></div><div class="npocard-foot"><div class="npocard-amt">2.8 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+            <div class="npocard" onclick="openFundModal('KZN Youth Skills Hub','🏃','R60,000','Youth Sports & Skills Programme')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#E8F5E9;">🏃</div><div><div class="npocard-name">KZN Youth Skills Hub</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span><span class="badge-d bd-gold" style="font-size:10px;">18A</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Sports, mentorship, and vocational training for at-risk youth in Durban townships — keeping youth engaged and employed.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">🏃 Youth</span><span class="badge-d bd-grey" style="font-size:10px;">📍 KwaZulu-Natal</span></div></div><div class="npocard-foot"><div class="npocard-amt">2.1 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+            <div class="npocard" onclick="openFundModal('Cape Health Community','🏥','R95,000','Community Health Screening')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#E3F5F5;">🏥</div><div><div class="npocard-name">Cape Health Community</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Mobile health screening clinics visiting Cape Flats communities — HIV, TB, diabetes and hypertension testing for 10,000+ residents.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">🏥 Health</span><span class="badge-d bd-grey" style="font-size:10px;">📍 Western Cape</span></div></div><div class="npocard-foot"><div class="npocard-amt">2.9 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+            <div class="npocard" onclick="openFundModal('Limpopo Schools Connect','📚','R120,000','Rural School Library')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#EEF3F8;">📚</div><div><div class="npocard-name">Limpopo Schools Connect</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Building libraries for rural Limpopo schools — 500 books, reading chairs, and a trained school librarian. 1,200 learners benefit.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">📚 Education</span><span class="badge-d bd-grey" style="font-size:10px;">📍 Limpopo</span></div></div><div class="npocard-foot"><div class="npocard-amt">3.2 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+            <div class="npocard" onclick="openFundModal('Knysna Forest Trust','🌿','R55,000','River Clean-Up & Conservation')"><div class="npocard-hdr"><div class="npocard-avatar" style="background:#E8F0E8;">🌿</div><div><div class="npocard-name">Knysna Forest Trust</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="badge-d bd-sage" style="font-size:10px;">✓ Verified</span><span class="badge-d bd-gold" style="font-size:10px;">18A</span></div></div></div><div class="npocard-body"><p class="npocard-desc">Conservation and environmental education — tree planting, river clean-ups, and biodiversity programmes for local schools.</p><div style="display:flex;gap:5px;flex-wrap:wrap;"><span class="badge-d bd-grey" style="font-size:10px;">🌿 Environment</span><span class="badge-d bd-grey" style="font-size:10px;">📍 Western Cape</span></div></div><div class="npocard-foot"><div class="npocard-amt">1.8 <small>BEE SED points</small></div><button class="dbtn-p" style="font-size:11px;padding:5px 12px;" onclick="event.stopPropagation();">Fund Now</button></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUND NEEDS CARDS TAB -->
+      <div id="corp-funding" class="tab-panel">
+        <div class="pg-hero"><h1>Fund Needs Cards</h1><p>Specific, costed projects ready for your support — every card creates measurable community impact</p></div>
+        <div class="cfull">
+          <div class="ncrd"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:9px;margin-bottom:.45rem;"><span style="font-size:1.4rem;">🎓</span><h4>Digital Literacy Programme — 30 Soweto Youth</h4></div><p>Training 30 unemployed youth aged 18–25 in MS Office, digital communication, email, and online job-seeking. Certificates issued on completion.</p><div class="ncrd-meta"><span class="badge-d bd-sage">Soweto Digital Academy</span><span class="badge-d bd-grey">📍 Gauteng</span><span class="badge-d bd-grey">👥 30 beneficiaries</span><span class="badge-d bd-gold">2.5 BEE pts</span><span class="badge-d bd-gold">Section 18A</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--dc);">R45,000</div><div style="font-size:11px;color:var(--dmut);">Full card · 3 months</div><button class="dbtn-p" style="margin-top:.45rem;" onclick="openFundModal('Soweto Digital Academy','🎓','R45,000','Digital Literacy Programme')">Fund This Card</button></div></div></div>
+          <div class="ncrd" style="border-left-color:var(--dsage);"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:9px;margin-bottom:.45rem;"><span style="font-size:1.4rem;">📚</span><h4>Rural School Library — Limpopo</h4></div><p>Building a reading library for 3 rural Limpopo schools — 500 books, reading chairs, and a trained school librarian. 1,200 learners will benefit.</p><div class="ncrd-meta"><span class="badge-d bd-sage">Limpopo Schools Connect</span><span class="badge-d bd-grey">📍 Limpopo</span><span class="badge-d bd-grey">👥 1,200 learners</span><span class="badge-d bd-gold">3.2 BEE pts</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--dc);">R120,000</div><div style="font-size:11px;color:var(--dmut);">Co-funding available</div><button class="dbtn-g" style="margin-top:.45rem;" onclick="openFundModal('Limpopo Schools Connect','📚','R120,000','Rural School Library')">Fund This Card</button></div></div></div>
+          <div class="ncrd" style="border-left-color:var(--dterr);"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:9px;margin-bottom:.45rem;"><span style="font-size:1.4rem;">💪</span><h4>Women's Entrepreneurship Cohort — Cape Town</h4></div><p>6-month intensive business training for 20 women from Khayelitsha and Mitchell's Plain — mentorship, financial literacy, and micro-loan access.</p><div class="ncrd-meta"><span class="badge-d bd-sage">WC Women Rising</span><span class="badge-d bd-grey">📍 Western Cape</span><span class="badge-d bd-grey">👥 20 women</span><span class="badge-d bd-gold">2.8 BEE pts</span><span class="badge-d bd-gold">Section 18A</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--dc);">R80,000</div><div style="font-size:11px;color:var(--dmut);">Full card · 6 months</div><button class="dbtn-p" style="margin-top:.45rem;background:var(--dterr);" onclick="openFundModal('WC Women Rising','💪','R80,000','Women Entrepreneurship Programme')">Fund This Card</button></div></div></div>
+          <div class="ncrd"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:9px;margin-bottom:.45rem;"><span style="font-size:1.4rem;">🏥</span><h4>Mobile Health Screening — Cape Flats</h4></div><p>3 community health screening days reaching 1,500 residents with HIV, TB, diabetes and hypertension testing and referrals.</p><div class="ncrd-meta"><span class="badge-d bd-sage">Cape Health Community</span><span class="badge-d bd-grey">📍 Western Cape</span><span class="badge-d bd-grey">👥 1,500 residents</span><span class="badge-d bd-gold">2.9 BEE pts</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--dc);">R95,000</div><div style="font-size:11px;color:var(--dmut);">Co-funding · 40% raised</div><button class="dbtn-p" style="margin-top:.45rem;" onclick="openFundModal('Cape Health Community','🏥','R95,000','Mobile Health Screening')">Fund This Card</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE TAB -->
+      <div id="corp-compliance" class="tab-panel">
+        <div class="pg-hero"><h1>Compliance Documents</h1><p>All certificates, receipts and BEE records auto-generated per donation — download anytime</p></div>
+        <div class="cfull">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dc);">Recent Certificates</h3><button class="dbtn-s" style="font-size:12px;padding:6px 12px;" onclick="toast('⬇️ All certificates downloaded as ZIP')">Download All</button></div>
+              <div class="dcard" style="padding:.9rem;">
+                <div style="display:flex;align-items:center;gap:10px;padding:.65rem 0;border-bottom:1px solid var(--dbor);"><div style="width:34px;height:34px;background:rgba(200,169,110,.12);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;">📜</div><div style="flex:1;"><div style="font-size:12.5px;font-weight:500;color:var(--dc);">BEE SED Certificate — Soweto Digital Academy</div><div style="font-size:11px;color:var(--dmut);">R45,000 · 2.5 pts · 12 Jan 2026</div></div><button class="dbtn-s" style="font-size:11px;padding:4px 9px;" onclick="document.getElementById('modal-cert').classList.add('open')">View</button></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:.65rem 0;border-bottom:1px solid var(--dbor);"><div style="width:34px;height:34px;background:rgba(122,158,126,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;">🧾</div><div style="flex:1;"><div style="font-size:12.5px;font-weight:500;color:var(--dc);">Section 18A Receipt — Limpopo Schools</div><div style="font-size:11px;color:var(--dmut);">R120,000 · Tax deductible · 10 Jan 2026</div></div><button class="dbtn-s" style="font-size:11px;padding:4px 9px;" onclick="toast('📄 18A receipt opened')">View</button></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:.65rem 0;"><div style="width:34px;height:34px;background:rgba(200,169,110,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;">📋</div><div style="flex:1;"><div style="font-size:12.5px;font-weight:500;color:var(--dc);">BEE SED Audit Report — Q4 2025</div><div style="font-size:11px;color:var(--dmut);">Full quarter · Board-ready · 5 Jan 2026</div></div><button class="dbtn-s" style="font-size:11px;padding:4px 9px;" onclick="toast('⬇️ Q4 Audit Report downloading...')">Download</button></div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dc);margin-bottom:1rem;">Sample Certificate</h3>
+              <div class="cert-box">
+                <div class="cert-seal">🏛️</div>
+                <div class="cert-title-d">QTM Impact Certificate</div>
+                <div style="font-size:11.5px;color:var(--dmut);margin:.22rem 0 .9rem;">Verified BEE SED Compliance Record · #QTM-2026-0042</div>
+                <div style="font-size:12.5px;color:var(--dm);margin-bottom:.4rem;">This certifies that</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--dc);">FNB Foundation</div>
+                <div style="font-size:12.5px;color:var(--dm);margin:.4rem 0 .65rem;">made a verified socio-economic development donation of</div>
+                <div class="cert-amount-d">R 45,000</div>
+                <div style="font-size:12.5px;color:var(--dm);margin:.4rem 0 .9rem;">to <strong>Soweto Digital Academy</strong>, a QTM Verified NPO</div>
+                <div class="cert-hr"></div>
+                <div class="cert-row-d"><span>BEE SED Points Earned</span><span style="color:var(--dgold);font-weight:600;">2.5 pts</span></div>
+                <div class="cert-row-d"><span>Section 18A Tax Receipt</span><span style="color:var(--dsage);">✓ #18A-2026-0042</span></div>
+                <div class="cert-row-d"><span>NPO DSD Verified</span><span style="color:var(--dsage);">✓ #DSD-4829211</span></div>
+                <div class="cert-row-d"><span>Transaction Date</span><span>12 January 2026</span></div>
+                <div style="margin-top:1rem;font-size:9.5px;color:var(--dmut);line-height:1.5;">Issued by Quod Tango Muto (Pty) Ltd | Valid BEE SED compliance record per the B-BBEE Act | qtm.co.za</div>
+                <div style="margin-top:1rem;display:flex;gap:.7rem;"><button class="dbtn-p" style="flex:1;padding:8px;font-size:12px;" onclick="toast('⬇️ Certificate downloaded as PDF')">Download PDF</button><button class="dbtn-s" style="flex:1;padding:8px;font-size:12px;" onclick="toast('📧 Certificate emailed to finance team')">Email to Finance</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACKING TAB -->
+      <div id="corp-tracking" class="tab-panel">
+        <div class="pg-hero"><h1>Impact Tracking</h1><p>See exactly where your CSR investment is creating change — province by province, community by community</p></div>
+        <div class="cfull">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div>
+              <div class="dcard" style="margin-bottom:1.5rem;"><div class="dcard-title">Geographic Impact</div><div class="map-ph"><div style="font-size:13px;color:var(--dsage);text-align:center;z-index:1;"><div style="font-size:2rem;margin-bottom:.4rem;">🗺️</div><div>South Africa — 6 Provinces Reached</div></div><div class="map-dot" style="left:42%;top:55%;"></div><div class="map-dot" style="left:30%;top:75%;background:var(--dsage);"></div><div class="map-dot" style="left:65%;top:60%;background:var(--dterr);"></div><div class="map-dot" style="left:50%;top:30%;background:var(--dsage);"></div><div class="map-dot" style="left:35%;top:45%;"></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>Gauteng</span><span>R3.2M · 6,200 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dgold);width:82%"></div></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>Western Cape</span><span>R2.4M · 4,100 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dsage);width:62%"></div></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>KwaZulu-Natal</span><span>R1.1M · 2,300 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dterr);width:28%"></div></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>Limpopo</span><span>R0.9M · 1,620 beneficiaries</span></div><div class="cbar-track"><div class="cbar-fill" style="background:#8B7AC4;width:23%"></div></div></div></div>
+              <div class="dcard"><div class="dcard-title">Impact Stories from NPOs</div><div style="border-radius:10px;background:var(--dcream);padding:.9rem;margin-bottom:.75rem;border:1px solid var(--dbor);"><div style="display:flex;align-items:center;gap:8px;margin-bottom:.65rem;"><span style="font-size:1.3rem;">🎓</span><div><div style="font-size:12.5px;font-weight:600;color:var(--dc);">30 Youth Graduated — Digital Programme</div><div style="font-size:11px;color:var(--dmut);">Soweto Digital Academy · Funded by FNB Foundation</div></div></div><p style="font-size:12.5px;color:var(--dl);line-height:1.6;">"The QTM platform connected us to FNB Foundation in 2 weeks. 30 learners trained — 18 are now employed." — Sipho Mokoena, Director</p><div style="margin-top:.65rem;display:flex;gap:7px;"><span class="badge-d bd-sage">✓ Completed</span><span class="badge-d bd-grey">18 placed in jobs</span></div></div><div style="border-radius:10px;background:var(--dcream);padding:.9rem;border:1px solid var(--dbor);"><div style="display:flex;align-items:center;gap:8px;margin-bottom:.65rem;"><span style="font-size:1.3rem;">💪</span><div><div style="font-size:12.5px;font-weight:600;color:var(--dc);">20 Women Entrepreneurs Trained</div><div style="font-size:11px;color:var(--dmut);">WC Women Rising · Khayelitsha</div></div></div><p style="font-size:12.5px;color:var(--dl);line-height:1.6;">"15 of our 20 graduates launched their own businesses. Total revenue generated: R780,000 in year 1."</p><div style="margin-top:.65rem;display:flex;gap:7px;"><span class="badge-d bd-sage">✓ Completed</span><span class="badge-d bd-grey">15 businesses launched</span></div></div></div>
+            </div>
+            <div>
+              <div class="dcard" style="margin-bottom:1.5rem;"><div class="dcard-title">Beneficiary Counter</div><div style="text-align:center;padding:1.2rem 0;"><div style="font-family:'Cormorant Garamond',serif;font-size:3.2rem;color:var(--dc);line-height:1;">14,820</div><div style="font-size:13.5px;color:var(--dmut);margin-bottom:1.3rem;">People directly impacted through QTM</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem;"><div style="background:var(--dcream);border-radius:8px;padding:.65rem;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--dc);">6,200</div><div style="font-size:10.5px;color:var(--dmut);">Youth trained</div></div><div style="background:var(--dcream);border-radius:8px;padding:.65rem;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--dc);">4,820</div><div style="font-size:10.5px;color:var(--dmut);">Learners supported</div></div><div style="background:var(--dcream);border-radius:8px;padding:.65rem;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--dc);">2,400</div><div style="font-size:10.5px;color:var(--dmut);">Health screenings</div></div><div style="background:var(--dcream);border-radius:8px;padding:.65rem;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--dc);">1,400</div><div style="font-size:10.5px;color:var(--dmut);">Women empowered</div></div></div></div></div>
+              <div class="dcard"><div class="dcard-title">NPO Impact Gallery</div><div style="font-size:12px;color:var(--dmut);margin-bottom:.75rem;">Photos uploaded by your funded NPOs after programme completion</div><div class="imp-gal-d"><div class="imp-img-d" onclick="toast('📸 Viewing: 30 youth graduates — Soweto Digital Academy, Jan 2026')">🎓</div><div class="imp-img-d" onclick="toast('📸 Viewing: Women entrepreneurship cohort graduation, Dec 2025')">💪</div><div class="imp-img-d" onclick="toast('📸 Viewing: Rural library opening — 3 Limpopo schools, Jan 2026')">📚</div><div class="imp-img-d" onclick="toast('📸 Viewing: Health screening day — 450 community members served')">🏥</div><div class="imp-img-d" onclick="toast('📸 Viewing: Youth sports programme — 120 participants')">⚽</div><div class="imp-add-d" onclick="toast('📤 NPOs upload impact photos here after programme completion')"><span style="font-size:1.2rem;color:var(--dmut);">+</span><span style="font-size:10px;color:var(--dmut);text-transform:uppercase;letter-spacing:.07em;">From NPOs</span></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD TAB -->
+      <div id="corp-leaderboard" class="tab-panel">
+        <div class="pg-hero"><h1>Corporate CSR Leaderboard</h1><p>Opt-in rankings — healthy peer competition drives greater community impact across South Africa</p></div>
+        <div class="cfull" style="max-width:680px;">
+          <div class="dcard">
+            <div class="dcard-title">Top Corporate Givers — 2025</div>
+            <div class="lb-row"><div class="lb-rank">🥇</div><div style="width:38px;height:38px;border-radius:9px;background:rgba(200,169,110,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🏦</div><div class="lb-info"><div class="lb-name">Standard Bank Foundation</div><div class="lb-sub">32 NPOs funded · Gauteng, Western Cape, KZN</div></div><div class="lb-amount">R24.5M</div><span class="badge-d bd-gold">Platinum</span></div>
+            <div class="lb-row" style="background:rgba(200,169,110,.05);border-radius:8px;padding:.7rem .5rem;"><div class="lb-rank">🥈</div><div style="width:38px;height:38px;border-radius:9px;background:rgba(200,169,110,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🏦</div><div class="lb-info"><div class="lb-name">FNB Foundation <span style="font-size:11px;color:var(--dterr);">(You)</span></div><div class="lb-sub">28 NPOs funded · 6 provinces</div></div><div class="lb-amount">R8.2M</div><span class="badge-d bd-gold">Gold</span></div>
+            <div class="lb-row"><div class="lb-rank">🥉</div><div style="width:38px;height:38px;border-radius:9px;background:var(--dcreamd);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">📱</div><div class="lb-info"><div class="lb-name">MTN SA Foundation</div><div class="lb-sub">19 NPOs funded · Nationwide</div></div><div class="lb-amount">R7.8M</div><span class="badge-d bd-sage">Silver</span></div>
+            <div class="lb-row"><div class="lb-rank" style="color:var(--dmut);font-size:1rem;">4</div><div style="width:38px;height:38px;border-radius:9px;background:var(--dcreamd);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🛒</div><div class="lb-info"><div class="lb-name">Shoprite CSI Division</div><div class="lb-sub">22 NPOs funded · Focus: food security</div></div><div class="lb-amount">R6.2M</div><span class="badge-d bd-sage">Silver</span></div>
+            <div class="lb-row"><div class="lb-rank" style="color:var(--dmut);font-size:1rem;">5</div><div style="width:38px;height:38px;border-radius:9px;background:var(--dcreamd);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">⛏️</div><div class="lb-info"><div class="lb-name">Anglo American Foundation</div><div class="lb-sub">15 NPOs funded · Mining communities</div></div><div class="lb-amount">R5.1M</div><span class="badge-d bd-grey">Bronze</span></div>
+          </div>
+          <div class="info-box-d" style="margin-top:1rem;"><span>💡</span><div>You're ranked <strong>#2</strong>. Fund R16.3M more this year to claim the #1 spot — your account manager can identify high-impact NPOs to close the gap.</div></div>
+        </div>
+      </div>
+
+      <!-- POINTS TAB -->
+      <div id="corp-points" class="tab-panel">
+        <div class="pg-hero"><h1>Points & Loyalty Tiers</h1><p>QTM rewards consistent, genuine giving — not just compliance spend</p></div>
+        <div class="cfull" style="max-width:680px;">
+          <div class="dcard" style="margin-bottom:1.5rem;"><div class="dcard-title">Your Current Status</div><div style="display:flex;align-items:center;gap:1.4rem;padding:.5rem 0;"><div style="text-align:center;"><div style="font-size:2.8rem;">🏆</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--dgold);">Gold Tier</div></div><div style="flex:1;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;"><span style="color:var(--dmut);">Points earned 2025</span><span style="font-weight:600;">87.4 / 100</span></div><div style="background:var(--dcreamd);border-radius:5px;height:9px;overflow:hidden;margin-bottom:.4rem;"><div style="background:var(--dgold);height:100%;width:87%;border-radius:5px;"></div></div><div style="font-size:11.5px;color:var(--dsage);">12.6 points to Platinum status</div></div></div></div>
+          <div class="dcard"><div class="dcard-title">Tier Benefits</div>
+            <div class="pts-tier"><div class="tier-icon-d">🥉</div><div><div class="tier-name-d">Bronze</div><div class="tier-desc-d">0–30 pts · Basic dashboard · 1 check-in/year</div></div><div class="tier-pts-d">0–30</div></div>
+            <div class="pts-tier"><div class="tier-icon-d">🥈</div><div><div class="tier-name-d">Silver</div><div class="tier-desc-d">31–60 pts · Quarterly reviews · Co-branded press assets</div></div><div class="tier-pts-d">31–60</div></div>
+            <div class="pts-tier active"><div class="tier-icon-d">🏆</div><div><div class="tier-name-d">Gold ← You are here</div><div class="tier-desc-d">61–90 pts · Priority NPO access · Board reports · Founding Partner badge</div></div><div class="tier-pts-d">61–90</div></div>
+            <div class="pts-tier"><div class="tier-icon-d">💎</div><div><div class="tier-name-d">Platinum</div><div class="tier-desc-d">91+ pts · Annual Impact Awards · Co-branding · Advisory seat · First feature access</div></div><div class="tier-pts-d">91+</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS TAB -->
+      <div id="corp-reports" class="tab-panel">
+        <div class="pg-hero"><h1>Reports & Documents</h1><p>Board-ready, audit-proof — one click to generate your full CSR compliance report</p></div>
+        <div class="cfull">
+          <button class="dbtn-p" style="margin-bottom:1.5rem;font-size:14.5px;padding:12px 28px;" onclick="toast('📄 Annual Impact Report generating — PDF ready in 30 seconds')">Generate Annual Impact Report</button>
+          <div class="dcard"><div class="dcard-title">Available Downloads</div><div style="display:grid;gap:.65rem;">
+            <div style="display:flex;align-items:center;gap:10px;padding:.9rem;background:var(--dcream);border-radius:8px;"><div style="font-size:1.7rem;">📊</div><div style="flex:1;"><div style="font-weight:600;color:var(--dc);font-size:13.5px;">Q4 2025 BEE SED Compliance Report</div><div style="font-size:11.5px;color:var(--dmut);">Full audit trail · All certificates included · Board-ready PDF</div></div><button class="dbtn-s" style="font-size:12px;padding:6px 12px;" onclick="toast('⬇️ Q4 Compliance Report downloading...')">Download</button></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:.9rem;background:var(--dcream);border-radius:8px;"><div style="font-size:1.7rem;">🧾</div><div style="flex:1;"><div style="font-weight:600;color:var(--dc);font-size:13.5px;">Section 18A Tax Receipts — 2025</div><div style="font-size:11.5px;color:var(--dmut);">28 receipts · Total value R8.2M · SARS compliant</div></div><button class="dbtn-s" style="font-size:12px;padding:6px 12px;" onclick="toast('⬇️ Tax Receipts bundle downloading...')">Download</button></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:.9rem;background:var(--dcream);border-radius:8px;"><div style="font-size:1.7rem;">📈</div><div style="flex:1;"><div style="font-weight:600;color:var(--dc);font-size:13.5px;">Live CSR Spend Tracker (Excel)</div><div style="font-size:11.5px;color:var(--dmut);">Auto-updated · Province, sector, NPO, date breakdown</div></div><button class="dbtn-s" style="font-size:12px;padding:6px 12px;" onclick="toast('📊 Live spend tracker syncing and downloading...')">Download</button></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:.9rem;background:var(--dcream);border-radius:8px;"><div style="font-size:1.7rem;">📰</div><div style="flex:1;"><div style="font-weight:600;color:var(--dc);font-size:13.5px;">Co-Branded Press Release Template</div><div style="font-size:11.5px;color:var(--dmut);">FNB Foundation × QTM · Ready for media distribution</div></div><button class="dbtn-s" style="font-size:12px;padding:6px 12px;" onclick="toast('📰 Press release template downloaded')">Download</button></div>
+          </div></div>
+        </div>
+      </div>
+
+    </div><!-- /main-area -->
+  </div><!-- /dash-layout -->
+</div><!-- end corp-dash -->
+
+
+<!-- ================================================================
+     SCREEN 5: NPO ENTRY
+     ================================================================ -->
+<div id="screen-npo-entry" class="screen dapp" style="background:var(--dcream);">
+  <div class="auth-wrap">
+    <div class="auth-card" style="max-width:460px;">
+      <div class="auth-logo"><div style="width:52px;height:52px;background:var(--dsage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;margin:0 auto 10px;">Q</div><h2>NPO Portal</h2><p>Access or join the QTM verified NPO network</p></div>
+      <div class="choice-grid">
+        <div class="choice-card" onclick="showScreen('screen-npo-login')"><div class="cc-icon">🔑</div><h4>Existing NPO</h4><p>Sign in to your verified NPO dashboard</p></div>
+        <div class="choice-card" onclick="showScreen('screen-npo-signup')"><div class="cc-icon">✨</div><h4>New NPO</h4><p>Register and begin the verification process</p></div>
+      </div>
+      <button class="btn-back-d" style="width:100%;justify-content:center;" onclick="showScreen('screen-landing')">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 6: NPO LOGIN
+     ================================================================ -->
+<div id="screen-npo-login" class="screen dapp" style="background:var(--dcream);">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo"><div style="width:52px;height:52px;background:var(--dsage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;margin:0 auto 10px;">Q</div><h2>NPO Sign In</h2><p>Access your QTM dashboard</p></div>
+      <div class="form-group-d"><label class="form-label-d">NPO Email Address</label><input type="email" class="form-input-d" value="info@sowetoacademy.co.za"></div>
+      <div class="form-group-d"><label class="form-label-d" style="display:flex;justify-content:space-between;">Password <a style="color:var(--dgold);cursor:pointer;font-size:12px;font-weight:400;">Forgot password?</a></label><input type="password" class="form-input-d" value="••••••••"></div>
+      <button class="dbtn-g" style="width:100%;padding:12px;font-size:14.5px;" onclick="showScreen('screen-npo-dash')">Sign In to NPO Dashboard →</button>
+      <div class="divider-d"><span>not yet registered?</span></div>
+      <button class="dbtn-s" style="width:100%;" onclick="showScreen('screen-npo-signup')">Register Your NPO →</button>
+      <div style="text-align:center;margin-top:.9rem;"><button class="btn-back-d" onclick="showScreen('screen-npo-entry')">← Back</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 7: NPO SIGNUP / VERIFICATION
+     ================================================================ -->
+<div id="screen-npo-signup" class="screen dapp">
+  <header class="app-header"><div class="hdr-logo"><div class="hdr-logo-icon" style="background:var(--dsage);color:#fff;">Q</div><div><div class="hdr-logo-name">QTM NPO Registration</div><div class="hdr-logo-sub">Verification Process</div></div></div><button class="btn-back-d" onclick="showScreen('screen-npo-entry')">← Back</button></header>
+  <div class="page-content" style="flex:1;overflow-y:auto;background:var(--dcream);">
+    <div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Register Your NPO on QTM</h1><p>Free to join · Complete these 7 steps to become a QTM Verified NPO and start receiving funding</p></div>
+    <div style="max-width:860px;margin:0 auto;padding:1.8rem;">
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:1.8rem;">
+        <div>
+          <div class="dcard" style="position:sticky;top:75px;">
+            <div class="dcard-title">Verification Steps</div>
+            <div class="vsd-step completed"><div class="step-number step-num-done">✓</div><div class="step-content-d"><h4>Organisation Registration</h4><p>Basic details and contact info</p></div></div>
+            <div class="vsd-step active" id="step2"><div class="step-number step-num-active">2</div><div class="step-content-d"><h4>Document Upload</h4><p>DSD certificate, financials, constitution</p></div></div>
+            <div class="vsd-step" id="step3"><div class="step-number step-num-locked">3</div><div class="step-content-d"><h4>QTM Initial Review</h4><p>48-hour document verification</p></div></div>
+            <div class="vsd-step"><div class="step-number step-num-locked">4</div><div class="step-content-d"><h4>Bank Account Confirmation</h4><p>Micro-payment verification (R1.00)</p></div></div>
+            <div class="vsd-step"><div class="step-number step-num-locked">5</div><div class="step-content-d"><h4>Clarification (if needed)</h4><p>QTM may request additional info</p></div></div>
+            <div class="vsd-step"><div class="step-number step-num-locked">6</div><div class="step-content-d"><h4>Verification Decision</h4><p>Within 5 business days</p></div></div>
+            <div class="vsd-step"><div class="step-number step-num-locked">7</div><div class="step-content-d"><h4>Profile Goes Live 🎉</h4><p>QTM Verified badge activated</p></div></div>
+            <div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--dbor);"><div style="font-size:11.5px;color:var(--dmut);text-align:center;">Estimated: 5–7 business days</div><div style="margin-top:.4rem;background:var(--dcreamd);border-radius:5px;height:5px;overflow:hidden;"><div style="background:var(--dsage);height:100%;width:28%"></div></div><div style="font-size:10.5px;color:var(--dsage);text-align:center;margin-top:3px;">Step 2 of 7</div></div>
+          </div>
+        </div>
+        <div>
+          <div id="signup-step2">
+            <div class="dcard" style="margin-bottom:1.4rem;">
+              <div class="dcard-title">Step 2: Upload Verification Documents</div>
+              <div class="info-box-d"><span>ℹ️</span><div><strong>Required Documents</strong>All documents below are required. Our team reviews within 48 hours with full POPIA compliance.</div></div>
+              <div class="upload-area" onclick="toast('📄 DSD NPO Registration Certificate uploaded')"><div class="upload-icon">📋</div><div>DSD NPO Registration Certificate *</div><div style="font-size:11px;color:var(--dmut);margin-top:4px;">PDF or JPG · Max 5MB</div></div>
+              <div class="upload-area" onclick="toast('🧾 Section 18A Certificate uploaded')"><div class="upload-icon">🧾</div><div>Section 18A Tax Exemption Certificate (if applicable)</div><div style="font-size:11px;color:var(--dmut);margin-top:4px;">Optional — enables tax-deductible donations</div></div>
+              <div class="upload-area" onclick="toast('📜 NPO Constitution uploaded')"><div class="upload-icon">📜</div><div>NPO Constitution or Founding Document *</div></div>
+              <div class="upload-area" onclick="toast('📊 Financial statements uploaded')"><div class="upload-icon">📊</div><div>Most Recent Audited Financial Statements *</div><div style="font-size:11px;color:var(--dmut);margin-top:4px;">Upload last 2 years</div></div>
+              <div class="upload-area" onclick="toast('🏦 Bank confirmation letter uploaded')"><div class="upload-icon">🏦</div><div>Bank Confirmation Letter (bank-stamped) *</div><div style="font-size:11px;color:var(--dmut);margin-top:4px;">Must be in the NPO's name</div></div>
+              <div class="upload-area" onclick="toast('🪪 Director ID documents uploaded')"><div class="upload-icon">🪪</div><div>ID Documents — Minimum 2 Directors / Trustees *</div></div>
+              <div class="upload-area" onclick="toast('📸 Operations proof uploaded')"><div class="upload-icon">📸</div><div>Proof of Current Operations (photos, programme reports, beneficiary lists)</div></div>
+            </div>
+            <div class="dcard" style="margin-bottom:1.4rem;"><div class="dcard-title">POPIA Consent</div><div style="font-size:12.5px;color:var(--dl);margin-bottom:.9rem;line-height:1.7;">By submitting, you confirm that QTM may store and process your organisation's information in compliance with the Protection of Personal Information Act. You own your data — QTM will never share it without explicit consent.</div><label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;"><span style="font-size:12.5px;color:var(--dc);">I agree to QTM's POPIA consent agreement and Terms of Service</span></label></div>
+            <div style="display:flex;gap:.9rem;"><button class="dbtn-g" style="flex:2;padding:12px;" onclick="advanceVerification()">Submit Documents for Review →</button><button class="dbtn-s" style="flex:1;" onclick="showScreen('screen-npo-entry')">Save & Exit</button></div>
+          </div>
+          <div id="signup-step3" style="display:none;">
+            <div class="dcard" style="text-align:center;padding:2.5rem 1.8rem;">
+              <div style="font-size:3.5rem;margin-bottom:.9rem;">🔍</div>
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--dc);margin-bottom:.65rem;">Documents Submitted!</h3>
+              <p style="color:var(--dl);font-size:13.5px;max-width:360px;margin:0 auto 1.8rem;line-height:1.7;">Our QTM NPO Relations team reviews within <strong>48 hours</strong>. You'll receive WhatsApp and email notifications at every step.</p>
+              <div style="background:var(--dcream);border-radius:10px;padding:1.3rem;text-align:left;margin-bottom:1.8rem;">
+                <div style="font-weight:600;color:var(--dc);margin-bottom:.9rem;">What happens next:</div>
+                <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">QTM Review (48 hrs)</div><div class="tl-sub">Documents cross-checked against DSD database</div></div></div>
+                <div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">Bank Verification</div><div class="tl-sub">R1.00 micro-payment sent to confirm your account</div></div></div>
+                <div class="tl-item"><div class="tl-dot" style="background:var(--dterr)"></div><div style="flex:1"><div class="tl-title">Verification Decision</div><div class="tl-sub">Within 5 business days of complete submission</div></div></div>
+                <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">Profile Goes Live 🎉</div><div class="tl-sub">Verified badge activated — ready to receive funding</div></div></div>
+              </div>
+              <button class="dbtn-g" style="padding:12px 28px;" onclick="showScreen('screen-npo-dash')">Preview Your NPO Dashboard →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 8: NPO DASHBOARD
+     ================================================================ -->
+<div id="screen-npo-dash" class="screen dapp">
+  <header class="app-header"><div class="hdr-logo"><div class="hdr-logo-icon" style="background:var(--dsage);color:#fff;">Q</div><div><div class="hdr-logo-name">QTM Platform</div><div class="hdr-logo-sub">Soweto Digital Academy</div></div></div><div class="hdr-right"><span class="badge-d bd-sage">✓ QTM Verified</span><div class="hdr-avatar" style="border-color:var(--dsage);background:rgba(122,158,126,.12);">SM</div><span class="hdr-name">Sipho Mokoena, Director</span><button class="btn-back-d" onclick="showScreen('screen-landing')">← Home</button></div></header>
+  <div class="dash-layout">
+    <nav class="sidebar">
+      <div class="sb-section"><div class="sb-label">My NPO</div>
+        <div class="sb-item active" onclick="switchNPOTab('home',this)"><span class="sb-icon">🏠</span>Dashboard</div>
+        <div class="sb-item" onclick="switchNPOTab('cards',this)"><span class="sb-icon">📋</span>Needs Cards <span class="sb-badge">3</span></div>
+        <div class="sb-item" onclick="switchNPOTab('impact',this)"><span class="sb-icon">📸</span>Impact Gallery</div>
+      </div>
+      <div class="sb-section"><div class="sb-label">Funding</div>
+        <div class="sb-item" onclick="switchNPOTab('history',this)"><span class="sb-icon">💰</span>Funding History</div>
+        <div class="sb-item" onclick="switchNPOTab('analytics',this)"><span class="sb-icon">📊</span>Analytics</div>
+      </div>
+      <div class="sb-section"><div class="sb-label">Account</div>
+        <div class="sb-item" onclick="switchNPOTab('verify',this)"><span class="sb-icon">✅</span>Verification Status</div>
+      </div>
+    </nav>
+    <div class="main-area">
+
+      <!-- NPO HOME -->
+      <div id="npo-home" class="tab-panel active">
+        <div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Welcome, Soweto Digital Academy 🌟</h1><p>Your organisation is verified and live — corporations can discover and fund your work right now</p></div>
+        <div class="stats-row">
+          <div class="scard"><div class="s-ico" style="background:rgba(122,158,126,.1);">💰</div><div class="s-lbl">Total Funding Received</div><div class="s-val">R425K</div><div class="s-sub" style="color:var(--dsage);">↑ This year</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(200,169,110,.1);">👀</div><div class="s-lbl">Profile Views (30 days)</div><div class="s-val">842</div><div class="s-sub">From 14 corporations</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(196,113,90,.1);">📋</div><div class="s-lbl">Active Needs Cards</div><div class="s-val">3</div><div class="s-sub">1 pending co-funding</div></div>
+          <div class="scard"><div class="s-ico" style="background:rgba(122,158,126,.08);">🤝</div><div class="s-lbl">Corporate Funders</div><div class="s-val">8</div><div class="s-sub">FNB, MTN, Vodacom + 5</div></div>
+        </div>
+        <div class="cgrid" style="margin-top:1.5rem;">
+          <div>
+            <div class="dcard" style="margin-bottom:1.4rem;">
+              <div class="dcard-title">Your Needs Cards <button class="dbtn-g" style="padding:6px 12px;font-size:12px;" onclick="switchNPOTab('cards',null);toast('✨ New Needs Card creator opened')">+ New Card</button></div>
+              <div class="ncrd"><h4>Digital Literacy Programme — 30 Youth (Phase 2)</h4><p>Training the next cohort of 30 unemployed youth in Soweto with digital skills and job-seeking tools.</p><div class="ncrd-meta" style="justify-content:space-between;"><div style="display:flex;gap:7px;"><span class="badge-d bd-gold">R45,000 needed</span><span class="badge-d bd-sage">2.5 BEE pts</span><span class="badge-d bd-gold">18A</span></div><span class="badge-d bd-pend">⏳ Seeking Funders</span></div></div>
+              <div class="ncrd" style="border-left-color:var(--dsage);"><h4>Computer Lab Upgrade — 20 Workstations</h4><p>Replacing 20 outdated computers with modern workstations to expand programme capacity to 60 youth per cohort.</p><div class="ncrd-meta" style="justify-content:space-between;"><div style="display:flex;gap:7px;"><span class="badge-d bd-gold">R85,000 needed</span><span class="badge-d bd-sage">3.1 BEE pts</span></div><span class="badge-d" style="background:rgba(90,158,160,.12);color:#1A5A60;border:1px solid rgba(90,158,160,.28);">🔄 Co-funding (40%)</span></div></div>
+              <div class="ncrd" style="border-left-color:var(--dsage);opacity:.75;"><h4>Youth Employment Workshop Series</h4><p>Monthly workshops with industry professionals connecting youth with real employment opportunities.</p><div class="ncrd-meta" style="justify-content:space-between;"><div style="display:flex;gap:7px;"><span class="badge-d bd-gold">R28,000 needed</span><span class="badge-d bd-sage">1.8 BEE pts</span></div><span class="badge-d bd-pend">⏳ Seeking Funders</span></div></div>
+            </div>
+            <div class="dcard">
+              <div class="dcard-title">Funding History</div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R45,000 received — FNB Foundation</div><div class="tl-sub">Digital Literacy Programme Phase 1 · Same-day payout</div></div><div class="tl-time">12 Jan</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">R120,000 received — MTN Foundation</div><div class="tl-sub">Technology Equipment · 3-year pledge confirmed</div></div><div class="tl-time">5 Jan</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R80,000 received — Vodacom Foundation</div><div class="tl-sub">Youth Skills Programme · Impact report submitted</div></div><div class="tl-time">18 Dec</div></div>
+              <div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">R180,000 received — Standard Bank</div><div class="tl-sub">Computer Lab Phase 1 · BEE SED certificate issued to funder</div></div><div class="tl-time">2 Dec</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="dcard" style="margin-bottom:1.4rem;border:2px solid rgba(122,158,126,.35);background:rgba(240,245,241,.5);">
+              <div class="dcard-title" style="color:#3A6B3E;">✓ QTM Verified Status</div>
+              <div style="text-align:center;padding:.4rem 0 .9rem;"><div style="font-size:2.8rem;margin-bottom:.4rem;">🏅</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#3A6B3E;">Verified NPO</div><div style="font-size:11.5px;color:var(--dmut);margin:.22rem 0 .9rem;">Valid until: December 2026</div><div style="display:flex;flex-direction:column;gap:5px;text-align:left;"><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--dmut);">DSD Registration</span><span style="color:var(--dsage);">✓ Confirmed</span></div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--dmut);">Bank Account</span><span style="color:var(--dsage);">✓ Verified</span></div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--dmut);">Section 18A</span><span style="color:var(--dsage);">✓ Active</span></div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--dmut);">Financial Statements</span><span style="color:var(--dsage);">✓ 2024 submitted</span></div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--dmut);">Annual Re-verification</span><span style="color:var(--dgold);">Due Dec 2026</span></div></div></div>
+            </div>
+            <div class="dcard" style="margin-bottom:1.4rem;">
+              <div class="dcard-title">Needs Card Performance</div>
+              <div style="font-size:12px;color:var(--dmut);margin-bottom:.65rem;">Which cards attract most corporate interest</div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Digital Literacy Programme</span><span>68 views</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dsage);width:85%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Computer Lab Upgrade</span><span>41 views</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dgold);width:51%"></div></div></div>
+              <div class="cbar-wrap"><div class="cbar-lbl"><span>Employment Workshop</span><span>28 views</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dterr);width:35%"></div></div></div>
+            </div>
+            <div class="dcard">
+              <div class="dcard-title">Your QTM Contact</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:.9rem;"><div style="width:42px;height:42px;border-radius:50%;background:rgba(122,158,126,.15);border:2px solid var(--dsage);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">👩🏾‍💼</div><div><div style="font-weight:600;color:var(--dc);">Nomvula Dlamini</div><div style="font-size:11.5px;color:var(--dmut);">NPO Relations Manager · QTM</div></div></div>
+              <div style="font-size:12.5px;color:var(--dl);margin-bottom:.7rem;">Here to support your NPO journey. Reach out anytime via WhatsApp or email.</div>
+              <div style="display:flex;gap:7px;"><button class="dbtn-g" style="flex:1;padding:7px;font-size:12px;" onclick="toast('💬 Opening WhatsApp with Nomvula...')">💬 WhatsApp</button><button class="dbtn-s" style="flex:1;padding:7px;font-size:12px;" onclick="toast('✉️ Email opened to Nomvula')">✉️ Email</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NPO IMPACT GALLERY -->
+      <div id="npo-impact" class="tab-panel">
+        <div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Impact Gallery</h1><p>Upload photos and proof of your funded programmes — visible directly in your funders' dashboards</p></div>
+        <div class="cfull">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.3rem;"><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--dc);">Programme Impact Photos</h3><button class="dbtn-g" onclick="toast('📸 Photo upload portal opened — select images with beneficiary counts and programme details')">+ Upload Photos</button></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:2rem;">
+            <div style="background:linear-gradient(135deg,#1A5048,#2C2C28);border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;" onclick="toast('🎓 30 youth graduates — Digital Literacy Programme Phase 1, Jan 2026')"><span style="font-size:2.5rem;">🎓</span><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);padding:.5rem;border-radius:0 0 12px 12px;"><div style="font-size:11px;color:#fff;">30 youth graduates</div><div style="font-size:10px;color:rgba(255,255,255,.6);">Digital Literacy · Jan 2026</div></div></div>
+            <div style="background:linear-gradient(135deg,#26215C,#2C2C28);border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;" onclick="toast('📚 Library opening — Langa Primary School beneficiaries')"><span style="font-size:2.5rem;">📚</span><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);padding:.5rem;border-radius:0 0 12px 12px;"><div style="font-size:11px;color:#fff;">Library handover</div><div style="font-size:10px;color:rgba(255,255,255,.6);">Education · Dec 2025</div></div></div>
+            <div style="background:linear-gradient(135deg,#3E2210,#2C2C28);border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;" onclick="toast('💼 Entrepreneurship workshop — 18 participants gained employment')"><span style="font-size:2.5rem;">💼</span><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);padding:.5rem;border-radius:0 0 12px 12px;"><div style="font-size:11px;color:#fff;">18 employed after training</div><div style="font-size:10px;color:rgba(255,255,255,.6);">Youth Dev · Nov 2025</div></div></div>
+            <div style="background:linear-gradient(135deg,#0A2A20,#1A1A18);border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;" onclick="toast('⚽ Youth sports day — 120 participants from Soweto townships')"><span style="font-size:2.5rem;">⚽</span><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);padding:.5rem;border-radius:0 0 12px 12px;"><div style="font-size:11px;color:#fff;">Youth sports day</div><div style="font-size:10px;color:rgba(255,255,255,.6);">Community · Oct 2025</div></div></div>
+            <div style="border:2px dashed var(--dborS);border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;" onclick="toast('📤 Upload portal opens — add impact photos with beneficiary counts and programme details')" onmouseover="this.style.background='rgba(200,169,110,.06)'" onmouseout="this.style.background='transparent'"><span style="font-size:2rem;color:var(--dmut);">+</span><span style="font-size:11px;color:var(--dmut);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem;">Add Photo</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;"><div style="background:var(--dw);border:1px solid var(--dbor);border-radius:10px;padding:1.1rem;text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--dc);">2,840</div><div style="font-size:11px;color:var(--dmut);">Total beneficiaries</div></div><div style="background:var(--dw);border:1px solid var(--dbor);border-radius:10px;padding:1.1rem;text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--dc);">6</div><div style="font-size:11px;color:var(--dmut);">Completed programmes</div></div><div style="background:var(--dw);border:1px solid var(--dbor);border-radius:10px;padding:1.1rem;text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--dc);">R425K</div><div style="font-size:11px;color:var(--dmut);">Total funding received</div></div></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER TABS -->
+      <div id="npo-cards" class="tab-panel"><div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Manage Needs Cards</h1><p>Create, edit and track your funding requests — each card is a specific, costed programme</p></div><div class="cfull"><button class="dbtn-g" style="margin-bottom:1.4rem;" onclick="toast('✨ New Needs Card creator opened — add programme details, budget and beneficiary count')">+ Create New Needs Card</button><div class="ncrd"><h4>Digital Literacy Programme — 30 Youth (Phase 2)</h4><p>Training 30 unemployed youth in Soweto with digital skills, MS Office, and job-seeking tools.</p><div class="ncrd-meta" style="justify-content:space-between;"><div style="display:flex;gap:7px;"><span class="badge-d bd-gold">R45,000 target</span><span class="badge-d bd-sage">2.5 BEE pts</span><span class="badge-d bd-gold">18A eligible</span></div><div style="display:flex;gap:5px;"><button class="dbtn-s" style="padding:5px 10px;font-size:11px;" onclick="toast('✏️ Editing Needs Card...')">Edit</button><span class="badge-d bd-pend">⏳ Seeking Funders</span></div></div></div><div class="ncrd" style="border-left-color:var(--dsage);"><h4>Computer Lab Upgrade — 20 Workstations</h4><p>Replacing 20 outdated computers to expand programme capacity to 60 youth per cohort.</p><div class="ncrd-meta" style="justify-content:space-between;"><div style="display:flex;gap:7px;"><span class="badge-d bd-gold">R85,000 target</span><span class="badge-d bd-sage">3.1 BEE pts</span></div><div style="display:flex;gap:5px;"><button class="dbtn-s" style="padding:5px 10px;font-size:11px;" onclick="toast('✏️ Editing Needs Card...')">Edit</button><span class="badge-d" style="background:rgba(90,158,160,.12);color:#1A5A60;">🔄 40% funded</span></div></div></div></div></div>
+      <div id="npo-history" class="tab-panel"><div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Funding History</h1><p>Complete record of all donations received through QTM — with payout confirmations</p></div><div class="cfull"><div class="dcard"><div class="dcard-title">All Donations Received</div><div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R45,000 — FNB Foundation</div><div class="tl-sub">Digital Literacy Programme · Same-day payout · BEE SED cert issued to funder</div></div><div class="tl-time">12 Jan 2026</div></div><div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">R120,000 — MTN Foundation</div><div class="tl-sub">Technology Equipment · 3-year pledge confirmed</div></div><div class="tl-time">5 Jan 2026</div></div><div class="tl-item"><div class="tl-dot" style="background:var(--dsage)"></div><div style="flex:1"><div class="tl-title">R80,000 — Vodacom Foundation</div><div class="tl-sub">Youth Skills Programme · Impact report submitted</div></div><div class="tl-time">18 Dec 2025</div></div><div class="tl-item"><div class="tl-dot" style="background:var(--dgold)"></div><div style="flex:1"><div class="tl-title">R180,000 — Standard Bank</div><div class="tl-sub">Computer Lab Phase 1 · BEE SED certificate issued</div></div><div class="tl-time">2 Dec 2025</div></div></div></div></div>
+      <div id="npo-analytics" class="tab-panel"><div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Analytics</h1><p>Understand which Needs Cards attract the most corporate interest and funding</p></div><div class="cfull"><div class="dcard"><div class="dcard-title">Needs Card Performance</div><div class="cbar-wrap"><div class="cbar-lbl"><span>Digital Literacy Programme</span><span>68 views · 2 funders</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dsage);width:85%"></div></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>Computer Lab Upgrade</span><span>41 views · 1 co-funder</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dgold);width:51%"></div></div></div><div class="cbar-wrap"><div class="cbar-lbl"><span>Employment Workshop Series</span><span>28 views · 0 funders</span></div><div class="cbar-track"><div class="cbar-fill" style="background:var(--dterr);width:35%"></div></div></div></div></div></div>
+      <div id="npo-verify" class="tab-panel"><div class="pg-hero" style="background:linear-gradient(135deg,#3A6B3E,#2A5E2E);"><h1>Verification Status</h1><p>Your QTM Verified badge is your trust signal to every corporate funder on the platform</p></div><div class="cfull" style="max-width:600px;"><div class="dcard" style="border:2px solid rgba(122,158,126,.4);background:rgba(240,245,241,.5);"><div class="dcard-title" style="color:#3A6B3E;">✓ QTM Verified Status — Active</div><div style="text-align:center;padding:.9rem 0 1.3rem;"><div style="font-size:3rem;margin-bottom:.4rem;">🏅</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:#3A6B3E;">Verified NPO</div><div style="font-size:12px;color:var(--dmut);margin:.22rem 0 1.2rem;">Valid until: December 2026</div><div style="display:flex;flex-direction:column;gap:6px;text-align:left;"><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="color:var(--dmut);">DSD Registration</span><span style="color:var(--dsage);">✓ Confirmed — #DSD-4829211</span></div><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="color:var(--dmut);">Bank Account</span><span style="color:var(--dsage);">✓ Verified — FNB 6231****</span></div><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="color:var(--dmut);">Section 18A</span><span style="color:var(--dsage);">✓ Active — enables tax-deductible donations</span></div><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="color:var(--dmut);">Financial Statements</span><span style="color:var(--dsage);">✓ 2024 audited financials submitted</span></div><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="color:var(--dmut);">Annual Re-verification</span><span style="color:var(--dgold);">Due December 2026 — reminder sent 60 days before</span></div></div></div></div></div></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FUND MODAL -->
+<div id="modal-fund" class="modal-overlay-d">
+  <div class="modal-d">
+    <div class="modal-hdr-d"><h3 id="mfund-title">Fund Needs Card</h3><button class="modal-close-d" onclick="closeModal()">✕</button></div>
+    <div class="modal-body-d">
+      <div style="background:var(--dcream);border-radius:10px;padding:.9rem;margin-bottom:1.1rem;"><div style="display:flex;align-items:center;gap:9px;margin-bottom:.65rem;"><span id="mfund-icon" style="font-size:1.8rem;">🎓</span><div><div id="mfund-npo" style="font-weight:600;color:var(--dc);">Soweto Digital Academy</div><div id="mfund-proj" style="font-size:12px;color:var(--dmut);">Digital Literacy Programme</div></div></div><div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--dmut);">Card Amount</span><span id="mfund-amount" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dc);">R45,000</span></div></div>
+      <div class="form-group-d"><label class="form-label-d">Funding Amount</label><input type="text" class="form-input-d" id="fund-input" value="R 45,000"><div style="font-size:11.5px;color:var(--dmut);margin-top:3px;">Co-funding supported — contribute partial amount</div></div>
+      <div class="form-group-d"><label class="form-label-d">Funding Reference (optional)</label><input type="text" class="form-input-d" placeholder="e.g. FNB-SED-Q1-2026"></div>
+      <div style="background:rgba(200,169,110,.07);border:1px solid var(--dborS);border-radius:10px;padding:.9rem;margin-bottom:.9rem;"><div style="font-size:12px;font-weight:600;color:var(--dm);margin-bottom:.4rem;">Auto-generated upon payment confirmation:</div><div style="font-size:12px;color:var(--dm);display:flex;flex-direction:column;gap:3px;"><div>📜 Branded BEE SED Impact Certificate</div><div>🧾 Section 18A Tax Receipt (sent to finance)</div><div>📋 BEE SED Compliance Record</div><div>✅ NPO Payment Confirmation with timestamp</div></div></div>
+      <div style="font-size:11.5px;color:var(--dmut);text-align:center;padding:.4rem 0;border-top:1px solid var(--dbor);"><strong>97%</strong> goes directly to the NPO · QTM fee: 3% (capped R2,000/transaction)</div>
+    </div>
+    <div class="modal-foot-d"><button class="dbtn-s" onclick="closeModal()">Cancel</button><button class="dbtn-p" onclick="processFunding()">Confirm & Fund →</button></div>
+  </div>
+</div>
+
+<!-- CERTIFICATE MODAL -->
+<div id="modal-cert" class="modal-overlay-d">
+  <div class="modal-d">
+    <div class="modal-hdr-d"><h3>BEE SED Impact Certificate</h3><button class="modal-close-d" onclick="document.getElementById('modal-cert').classList.remove('open')">✕</button></div>
+    <div class="modal-body-d">
+      <div class="cert-box"><div class="cert-seal">🏛️</div><div class="cert-title-d">QTM Impact Certificate</div><div style="font-size:11.5px;color:var(--dmut);margin:.2rem 0 .9rem;">Verified BEE SED Compliance Record · Certificate No. QTM-2026-0042</div><div style="font-size:12.5px;color:var(--dm);margin-bottom:.35rem;">This certifies that</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--dc);">FNB Foundation</div><div style="font-size:12.5px;color:var(--dm);margin:.35rem 0 .65rem;">made a verified socio-economic development donation of</div><div class="cert-amount-d">R 45,000</div><div style="font-size:12.5px;color:var(--dm);margin:.4rem 0 .9rem;">to <strong>Soweto Digital Academy</strong>, a QTM Verified NPO</div><div class="cert-hr"></div><div class="cert-row-d"><span>BEE SED Category</span><span>Socio-Economic Development</span></div><div class="cert-row-d"><span>BEE Points Earned</span><span style="color:var(--dgold);font-weight:600;">2.5 pts</span></div><div class="cert-row-d"><span>Section 18A Tax Receipt</span><span style="color:var(--dsage);">✓ #18A-2026-0042</span></div><div class="cert-row-d"><span>NPO DSD Verified</span><span style="color:var(--dsage);">✓ #DSD-4829211</span></div><div class="cert-row-d"><span>Transaction Date</span><span>12 January 2026</span></div><div style="margin-top:.9rem;font-size:9.5px;color:var(--dmut);line-height:1.5;">Issued by Quod Tango Muto (Pty) Ltd | Valid BEE SED compliance record per the B-BBEE Act | qtm.co.za</div></div>
+    </div>
+    <div class="modal-foot-d"><button class="dbtn-s" onclick="document.getElementById('modal-cert').classList.remove('open')">Close</button><button class="dbtn-p" onclick="toast('⬇️ Certificate downloaded as PDF')">Download PDF</button></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toast-wrap"></div>
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"><div class="notif-title" id="notif-title"></div><div class="notif-msg" id="notif-msg"></div></div>
+
+<script>
+// SCREEN NAV
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+// LANDING TABS
+function switchLandTab(tab,el){
+  document.querySelectorAll('.tab-btn-l').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.tab-content-l').forEach(c=>c.classList.remove('active'));
+  document.getElementById('lt-'+tab).classList.add('active');
+}
+
+// CORP DASHBOARD TABS
+function switchCorpTab(tab,el){
+  document.querySelectorAll('#screen-corp-dash .tab-panel').forEach(t=>t.classList.remove('active'));
+  const target=document.getElementById('corp-'+tab);
+  if(target)target.classList.add('active');
+  if(el){document.querySelectorAll('#screen-corp-dash .sb-item').forEach(i=>i.classList.remove('active'));el.classList.add('active');}
+  window.scrollTo(0,0);
+}
+
+// NPO DASHBOARD TABS
+function switchNPOTab(tab,el){
+  document.querySelectorAll('#screen-npo-dash .tab-panel').forEach(t=>t.classList.remove('active'));
+  const target=document.getElementById('npo-'+tab);
+  if(target)target.classList.add('active');
+  if(el){document.querySelectorAll('#screen-npo-dash .sb-item').forEach(i=>i.classList.remove('active'));el.classList.add('active');}
+  window.scrollTo(0,0);
+}
+
+// MODALS
+function openFundModal(npo,icon,amount,proj){
+  document.getElementById('mfund-title').textContent='Fund: '+npo;
+  document.getElementById('mfund-npo').textContent=npo;
+  document.getElementById('mfund-icon').textContent=icon;
+  document.getElementById('mfund-amount').textContent=amount;
+  document.getElementById('mfund-proj').textContent=proj;
+  document.getElementById('fund-input').value=amount;
+  document.getElementById('modal-fund').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-fund').classList.remove('open');}
+function processFunding(){closeModal();toast('✅ Funding confirmed! BEE SED Certificate, Section 18A Receipt & Compliance Record sent to your email.');setTimeout(()=>toast('📲 NPO notified via WhatsApp — funds arriving same day'),2500);}
+
+// VERIFICATION
+function advanceVerification(){
+  document.getElementById('signup-step2').style.display='none';
+  document.getElementById('signup-step3').style.display='block';
+  document.getElementById('step2').className='vsd-step completed';
+  document.getElementById('step2').querySelector('.step-number').className='step-number step-num-done';
+  document.getElementById('step2').querySelector('.step-number').textContent='✓';
+  document.getElementById('step3').className='vsd-step active';
+  document.getElementById('step3').querySelector('.step-number').className='step-number step-num-active';
+  toast('📨 Documents submitted! WhatsApp confirmation sent to your number.');
+}
+
+// TOAST
+function toast(msg){
+  const wrap=document.getElementById('toast-wrap');
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  wrap.appendChild(t);setTimeout(()=>t.remove(),4500);
+}
+
+// LANDING NOTIFICATION (used for landing page interactions)
+function showNotif(title,msg){
+  const n=document.getElementById('notif');
+  document.getElementById('notif-title').textContent=title;
+  document.getElementById('notif-msg').textContent=msg;
+  n.classList.add('show');setTimeout(()=>n.classList.remove('show'),5000);
+}
+
+// CLOSE MODALS ON OVERLAY
+document.querySelectorAll('.modal-overlay-d').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+
+// SCROLL REVEAL
+const rv=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');rv.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
+
+// ANIMATE BARS
+window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.cbar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,100);});},500);});
+</script>
+</body>
+</html>
